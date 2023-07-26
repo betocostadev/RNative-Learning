@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView, View } from 'react-native'
-import Basket from './src/screens/basket'
+import Home from './src/screens/home'
 import {
   useFonts,
   Montserrat_300Light,
@@ -22,7 +22,7 @@ export default function App() {
   return (
     <SafeAreaView>
       <StatusBar style="auto" />
-      <Basket />
+      <Home />
     </SafeAreaView>
   )
 }

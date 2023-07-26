@@ -1,30 +1,6 @@
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
-import top from '../../assets/top.png'
-import logo from '../../assets/logo.png'
-import CustomText from '../components/CustomText'
+import { Dimensions, StyleSheet } from 'react-native'
 
 const screenWidth = Dimensions.get('screen').width
-
-const Basket = () => {
-  return (
-    <View>
-      <CustomText style={styles.title}>Basket details</CustomText>
-      <Image style={styles.top} source={top} />
-      <View style={styles.basket}>
-        <CustomText style={styles.basketName}>Vegetables Basket</CustomText>
-        <View style={styles.farm}>
-          <Image style={styles.farmLogo} source={logo} />
-          <CustomText style={styles.farmName}>Jenny Jack Farm</CustomText>
-        </View>
-        <CustomText style={styles.description}>
-          Some whatever mixed with much more whatever in a way that whatever.
-          Get it now in this super promotion!
-        </CustomText>
-        <CustomText style={styles.price}>CAD$ 9,85</CustomText>
-      </View>
-    </View>
-  )
-}
 
 const styles = StyleSheet.create({
   top: {
@@ -82,4 +58,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Basket
+export default styles
