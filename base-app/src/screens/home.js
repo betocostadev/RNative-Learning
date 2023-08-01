@@ -1,7 +1,7 @@
 import Basket from '../components/Basket/basket'
 
-const Home = () => {
-  return <Basket />
+const Home = ({ mock }) => {
+  return <Basket basketData={mock} />
 }
 
 export default Home

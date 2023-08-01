@@ -56,6 +56,19 @@ const styles = StyleSheet.create({
     lineHeight: 42,
     marginTop: 8,
   },
+  button: {
+    marginTop: 16,
+    paddingVertical: 16,
+    borderRadius: 6,
+    backgroundColor: '#2A9F85',
+  },
+  buttonText: {
+    fontSize: 18,
+    lineHeight: 26,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
+  },
 })
 
 export default styles

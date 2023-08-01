@@ -3,12 +3,12 @@ import BasketTop from './top'
 import styles from './basketStyles'
 import BasketDetails from './details'
 
-const Basket = () => {
+const Basket = ({ basketData }) => {
   return (
     <View>
-      <BasketTop />
+      <BasketTop topData={basketData.top} />
       <View style={styles.basket}>
-        <BasketDetails />
+        <BasketDetails details={basketData.details} />
       </View>
     </View>
   )
