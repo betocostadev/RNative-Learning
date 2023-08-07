@@ -19,6 +19,14 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     zIndex: 2,
   },
+  itemsHeader: {
+    color: '#464646',
+    fontWeight: 'bold',
+    marginTop: 32,
+    marginBottom: 5,
+    fontSize: 20,
+    lineHeight: 32,
+  },
   basket: {
     paddingVertical: 8,
     paddingHorizontal: 16,
