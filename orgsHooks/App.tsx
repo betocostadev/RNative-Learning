@@ -9,7 +9,6 @@ import React from 'react'
 import type {PropsWithChildren} from 'react'
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -17,40 +16,38 @@ import {
   View,
 } from 'react-native'
 
-import {
-  Colors,
-  Header,
-} from 'react-native/Libraries/NewAppScreen'
+import {Colors} from 'react-native/Libraries/NewAppScreen'
+import Home from './src/screens/Home'
 
-type SectionProps = PropsWithChildren<{
-  title: string
-}>
+// type SectionProps = PropsWithChildren<{
+//   title: string
+// }>
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark'
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  )
-}
+// function Section({children, title}: SectionProps): JSX.Element {
+//   const isDarkMode = useColorScheme() === 'dark'
+//   return (
+//     <View style={styles.sectionContainer}>
+//       <Text
+//         style={[
+//           styles.sectionTitle,
+//           {
+//             color: isDarkMode ? Colors.white : Colors.black,
+//           },
+//         ]}>
+//         {title}
+//       </Text>
+//       <Text
+//         style={[
+//           styles.sectionDescription,
+//           {
+//             color: isDarkMode ? Colors.light : Colors.dark,
+//           },
+//         ]}>
+//         {children}
+//       </Text>
+//     </View>
+//   )
+// }
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark'
@@ -65,20 +62,7 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="First React-Native App">
-            This App is not using <Text style={styles.highlight}>EXPO</Text> to run.
-            It is a React-Native CLI App.
-          </Section>
-        </View>
-      </ScrollView>
+      <Home />
     </SafeAreaView>
   )
 }
