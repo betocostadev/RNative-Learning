@@ -1,11 +1,11 @@
-import { Image, StyleSheet, Text, View } from "react-native"
+import {Image, StyleSheet, Text, View} from 'react-native'
 import logo from '../assets/logo.png'
-import { getTopData } from "../services/gen-data"
-import { useEffect, useState } from "react"
+import {getTopData} from '../services/gen-data'
+import {useEffect, useState} from 'react'
 
 const Top = () => {
-  const [welcomeText, setWelcomeText ] = useState('')
-  const [subheading, setSubheading ] = useState('')
+  const [welcomeText, setWelcomeText] = useState('')
+  const [subheading, setSubheading] = useState('')
 
   const getData = async () => {
     try {
@@ -21,13 +21,13 @@ const Top = () => {
 
   useEffect(() => {
     getData()
-  },[])
+  }, [])
 
   return (
     <View style={styles.top}>
       <Image style={styles.image} source={logo} />
-    <Text style={styles.welcome}>{ welcomeText }</Text>
-    <Text style={styles.subheading}>{ subheading }</Text>
+      <Text style={styles.welcome}>{welcomeText}</Text>
+      <Text style={styles.subheading}>{subheading}</Text>
     </View>
   )
 }
@@ -35,22 +35,23 @@ const Top = () => {
 const styles = StyleSheet.create({
   top: {
     backgroundColor: '#f6f6f6',
-    padding: 16
+    padding: 16,
   },
   image: {
     width: 70,
-    height: 28
+    height: 28,
   },
   welcome: {
     marginTop: 24,
     fontSize: 26,
     lineHeight: 42,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   subheading: {
     fontSize: 16,
-    lineHeight: 26
-  }
+    lineHeight: 26,
+    color: '#A3A3A3',
+  },
 })
 
 export default Top

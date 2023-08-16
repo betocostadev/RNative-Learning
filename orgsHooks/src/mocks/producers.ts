@@ -9,8 +9,8 @@ const genRandomNum = (min: number, max: number) => {
 }
 
 const producers = {
-  titulo: 'Producers',
-  lista: [
+  title: 'Producers',
+  list: [
     {
       name: 'Green',
       image: green,
