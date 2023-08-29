@@ -1,14 +1,13 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {IProducer} from '../types/producers'
 import Stars from './Stars'
-import {useState} from 'react'
+import {useReducer} from 'react'
 
 const Producer = ({name, image, distance, stars}: IProducer) => {
-  const [selected, setSelected] = useState(false)
-  const changeSelection = () => setSelected(!selected)
+  const [selected, toggleSelected] = useReducer(state => !state, false)
 
   return (
-    <TouchableOpacity style={styles.card} onPress={changeSelection}>
+    <TouchableOpacity style={styles.card} onPress={toggleSelected}>
       <Image style={styles.image} source={image} accessibilityLabel={name} />
       <View style={styles.info}>
         <View>

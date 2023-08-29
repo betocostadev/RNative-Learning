@@ -1,14 +1,11 @@
-import {useEffect, useState} from 'react'
 import {FlatList, StyleSheet, Text} from 'react-native'
-import {getProducers} from '../services/gen-data'
-import {IProducer, TypeProducers} from '../types/producers'
 import Producer from './Producer'
+import useProducers from '../hooks/useProducers'
 
 // type ProducersList = Omit<TypeProducers, 'title'>[]
 
 const Producers = ({header: Header}: {header: any}) => {
-  const [title, setTitle] = useState('')
-  const [producers, setProducers] = useState<IProducer[]>([])
+  const {title, producers} = useProducers()
 
   const getHeader = () => {
     return (
@@ -18,22 +15,6 @@ const Producers = ({header: Header}: {header: any}) => {
       </>
     )
   }
-
-  const getData = async () => {
-    try {
-      const data = getProducers()
-      if (data) {
-        setTitle(data.title)
-        setProducers(data.list as IProducer[])
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  useEffect(() => {
-    getData()
-  }, [producers])
 
   if (!producers) return <Text style={styles.title}>Loading...</Text>
 
