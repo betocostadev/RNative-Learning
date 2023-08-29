@@ -1,10 +1,14 @@
 import {useEffect, useState} from 'react'
 import {FlatList, StyleSheet, Text} from 'react-native'
 import {getProducers} from '../services/gen-data'
+import {IProducer, TypeProducers} from '../types/producers'
+import Producer from './Producer'
+
+// type ProducersList = Omit<TypeProducers, 'title'>[]
 
 const Producers = ({header: Header}: {header: any}) => {
   const [title, setTitle] = useState('')
-  const [producers, setProducers] = useState([])
+  const [producers, setProducers] = useState<IProducer[]>([])
 
   const getHeader = () => {
     return (
@@ -20,8 +24,7 @@ const Producers = ({header: Header}: {header: any}) => {
       const data = getProducers()
       if (data) {
         setTitle(data.title)
-        setProducers(data.list as never)
-        console.log(producers)
+        setProducers(data.list as IProducer[])
       }
     } catch (error) {
       console.error(error)
@@ -30,15 +33,23 @@ const Producers = ({header: Header}: {header: any}) => {
 
   useEffect(() => {
     getData()
-  }, [])
+  }, [producers])
 
   if (!producers) return <Text style={styles.title}>Loading...</Text>
 
   return (
     <FlatList
+      style={{backgroundColor: '#f6f6f6'}}
       data={producers}
-      renderItem={({item: {name}}) => <Text>{name}</Text>}
-      keyExtractor={({name}) => `producer-${name}`}
+      renderItem={({item}) => (
+        <Producer
+          name={item.name}
+          image={item.image}
+          distance={item.distance}
+          stars={item.stars}
+        />
+      )}
+      keyExtractor={({name}: any) => `producer-${name}`}
       ListHeaderComponent={getHeader()}
     />
   )
