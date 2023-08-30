@@ -1,10 +1,16 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {IProducer} from '../types/producers'
 import Stars from './Stars'
-import {useReducer} from 'react'
+import {useMemo, useReducer} from 'react'
 
 const Producer = ({name, image, distance, stars}: IProducer) => {
   const [selected, toggleSelected] = useReducer(state => !state, false)
+
+  const distanceInMeters = (distance: number) => {
+    return `${distance} M`
+  }
+
+  const distanceString = useMemo(() => distanceInMeters(distance), [distance])
 
   return (
     <TouchableOpacity style={styles.card} onPress={toggleSelected}>
@@ -14,7 +20,7 @@ const Producer = ({name, image, distance, stars}: IProducer) => {
           <Text style={styles.name}>{name}</Text>
           <Stars starsQty={stars} isEditable={selected} isBig={selected} />
         </View>
-        <Text style={styles.distance}>{distance}</Text>
+        <Text style={styles.distance}>{distanceString}</Text>
       </View>
     </TouchableOpacity>
   )

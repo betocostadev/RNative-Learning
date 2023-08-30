@@ -3,7 +3,7 @@ import {ImageSourcePropType} from 'react-native'
 export interface IProducer {
   name: string
   image: ImageSourcePropType
-  distance: string
+  distance: number
   stars: number
 }
 
