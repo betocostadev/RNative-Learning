@@ -1,6 +1,6 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import {IProducer} from '../types/producers'
-import Stars from './Stars'
+import {IProducer} from '../../types/producers'
+import Stars from '../Stars'
 import {useMemo, useReducer} from 'react'
 
 const Producer = ({name, image, distance, stars}: IProducer) => {

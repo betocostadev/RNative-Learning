@@ -1,57 +1,59 @@
-import {Image, StyleSheet, Text, View} from 'react-native'
-import logo from '../assets/logo.png'
-import {getTopData} from '../services/gen-data'
-import {useEffect, useState} from 'react'
+import React from 'react'
+import {Image, StyleSheet, Dimensions, TouchableOpacity} from 'react-native'
 
-const Top = () => {
-  const [welcomeText, setWelcomeText] = useState('')
-  const [subheading, setSubheading] = useState('')
+import Gradient from '../assets/gradient.svg'
+import topo from '../assets/top.png'
+import BackSVG from '../assets/back.svg'
+import CustomText from './CustomText'
 
-  const getData = async () => {
-    try {
-      const data = getTopData()
-      if (data) {
-        setWelcomeText(data.welcome)
-        setSubheading(data.subheading)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+const largura = Dimensions.get('screen').width
+const DEFAULT_HEIGHT = 270
 
-  useEffect(() => {
-    getData()
-  }, [])
-
+const Top = ({title, imagem = topo, height = DEFAULT_HEIGHT}) => {
+  const styles = funcStyles(height)
   return (
-    <View style={styles.top}>
-      <Image style={styles.image} source={logo} />
-      <Text style={styles.welcome}>{welcomeText}</Text>
-      <Text style={styles.subheading}>{subheading}</Text>
-    </View>
+    <>
+      <Image source={imagem} style={styles.top} />
+      <Gradient
+        width={largura}
+        height={(130 / 360) * largura}
+        style={styles.gradient}
+      />
+      <CustomText style={styles.title}>{title}</CustomText>
+      <TouchableOpacity onPress={() => {}} style={styles.backBtn}>
+        <BackSVG color="white" style={styles.back} />
+      </TouchableOpacity>
+    </>
   )
 }
 
-const styles = StyleSheet.create({
-  top: {
-    backgroundColor: '#f6f6f6',
-    padding: 16,
-  },
-  image: {
-    width: 70,
-    height: 28,
-  },
-  welcome: {
-    marginTop: 24,
-    fontSize: 26,
-    lineHeight: 42,
-    fontWeight: 'bold',
-  },
-  subheading: {
-    fontSize: 16,
-    lineHeight: 26,
-    color: '#A3A3A3',
-  },
-})
+const funcStyles = height =>
+  StyleSheet.create({
+    top: {
+      width: '100%',
+      height: height,
+    },
+    gradient: {
+      position: 'absolute',
+    },
+    title: {
+      width: '100%',
+      position: 'absolute',
+      textAlign: 'center',
+      fontSize: 16,
+      lineHeight: 26,
+      color: 'white',
+      fontWeight: 'bold',
+      padding: 16,
+    },
+    backBtn: {
+      position: 'absolute',
+      padding: 17,
+    },
+    back: {
+      width: 24,
+      height: 24,
+    },
+  })
 
 export default Top

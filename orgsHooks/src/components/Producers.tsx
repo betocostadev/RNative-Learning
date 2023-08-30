@@ -1,5 +1,5 @@
 import {FlatList, StyleSheet, Text} from 'react-native'
-import Producer from './Producer'
+import Producer from './Home/Producer'
 import useProducers from '../hooks/useProducers'
 
 // type ProducersList = Omit<TypeProducers, 'title'>[]

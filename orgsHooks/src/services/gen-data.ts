@@ -1,10 +1,10 @@
 import producers from '../mocks/producers'
-import top from '../mocks/top'
+import texts from '../mocks/texts'
 
 export const getProducers = () => {
   return producers
 }
 
-export const getTopData = () => {
-  return top
+export const getTexts = () => {
+  return texts
 }

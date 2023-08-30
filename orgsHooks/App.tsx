@@ -55,7 +55,7 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <Home />
+      <Home bestProducers={false} />
     </SafeAreaView>
   )
 }

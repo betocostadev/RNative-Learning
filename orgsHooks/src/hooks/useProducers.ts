@@ -2,16 +2,23 @@ import {useEffect, useState} from 'react'
 import {IProducer} from '../types/producers'
 import {getProducers} from '../services/gen-data'
 
-export default function useProducers() {
-  const [title, setTitle] = useState('')
+export default function useProducers(bestProducers: boolean) {
   const [producers, setProducers] = useState<IProducer[]>([])
 
   const getData = async () => {
     try {
       const data = getProducers()
+
       if (data) {
-        setTitle(data.title)
-        setProducers(data.list as IProducer[])
+        const list = data.list.sort(
+          (prod1, prod2) => prod1.distance - prod2.distance,
+        )
+
+        setProducers(
+          bestProducers
+            ? (list.filter(producer => producer.stars > 3) as IProducer[])
+            : (list as IProducer[]),
+        )
       }
     } catch (error) {
       console.error(error)
@@ -22,5 +29,5 @@ export default function useProducers() {
     getData()
   }, [producers])
 
-  return {title, producers}
+  return producers
 }
