@@ -10,39 +10,12 @@ import {SafeAreaView, StatusBar, StyleSheet, useColorScheme} from 'react-native'
 
 import {Colors} from 'react-native/Libraries/NewAppScreen'
 import Home from './src/screens/Home'
-
-// type SectionProps = PropsWithChildren<{
-//   title: string
-// }>
-
-// function Section({children, title}: SectionProps): JSX.Element {
-//   const isDarkMode = useColorScheme() === 'dark'
-//   return (
-//     <View style={styles.sectionContainer}>
-//       <Text
-//         style={[
-//           styles.sectionTitle,
-//           {
-//             color: isDarkMode ? Colors.white : Colors.black,
-//           },
-//         ]}>
-//         {title}
-//       </Text>
-//       <Text
-//         style={[
-//           styles.sectionDescription,
-//           {
-//             color: isDarkMode ? Colors.light : Colors.dark,
-//           },
-//         ]}>
-//         {children}
-//       </Text>
-//     </View>
-//   )
-// }
+import useProducers from './src/hooks/useProducers'
+import Basket from './src/screens/Basket'
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark'
+  const producers = useProducers(false)
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -56,6 +29,7 @@ function App(): JSX.Element {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <Home bestProducers={false} />
+      {/* {producers.length > 0 && <Basket producer={producers[0]} />} */}
     </SafeAreaView>
   )
 }

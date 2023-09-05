@@ -1,33 +1,44 @@
 import React from 'react'
-import {Image, StyleSheet, Dimensions, TouchableOpacity} from 'react-native'
+import {
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import Gradient from '../assets/gradient.svg'
-import topo from '../assets/top.png'
 import BackSVG from '../assets/back.svg'
+import topImage from '../assets/top.png'
 import CustomText from './CustomText'
 
-const largura = Dimensions.get('screen').width
+const deviceWidth = Dimensions.get('screen').width
 const DEFAULT_HEIGHT = 270
 
-const Top = ({title, imagem = topo, height = DEFAULT_HEIGHT}) => {
+const Top = ({title = '', image = topImage, height = DEFAULT_HEIGHT}) => {
   const styles = funcStyles(height)
+
   return (
-    <>
-      <Image source={imagem} style={styles.top} />
+    <View>
+      <Image source={image} style={styles.top} />
       <Gradient
-        width={largura}
-        height={(130 / 360) * largura}
+        width={deviceWidth}
+        height={(130 / 360) * deviceWidth}
         style={styles.gradient}
       />
       <CustomText style={styles.title}>{title}</CustomText>
-      <TouchableOpacity onPress={() => {}} style={styles.backBtn}>
+      <TouchableOpacity
+        // onPress={() => {
+        //   console.log('Hi')
+        // }}
+        style={styles.backBtn}>
         <BackSVG color="white" style={styles.back} />
       </TouchableOpacity>
-    </>
+    </View>
   )
 }
 
-const funcStyles = height =>
+const funcStyles = (height: number) =>
   StyleSheet.create({
     top: {
       width: '100%',

@@ -1,6 +1,6 @@
 import {StyleSheet, Text} from 'react-native'
 
-const CustomText = ({children, style}) => {
+const CustomText = ({children, style}: any) => {
   const defStyle =
     style?.fontWeight === 'bold'
       ? styles.boldText

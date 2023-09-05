@@ -27,7 +27,7 @@ export default function useProducers(bestProducers: boolean) {
 
   useEffect(() => {
     getData()
-  }, [producers])
+  }, [bestProducers])
 
   return producers
 }

@@ -10,22 +10,6 @@ type Props = {
 const Stars = ({starsQty, isEditable, isBig}: Props) => {
   const [quantity, setQuantity] = useState(0)
 
-  // const RenderStars = () => {
-  //   const starsList = []
-  //   for (let i = 0; i < 5; i++) {
-  //     starsList.push(
-  //       <Star
-  //         key={`touch-start-${i}`}
-  //         onPress={setQuantity(i + 1)}
-  //         isFilled={i < quantity}
-  //         isBig={isBig}
-  //         isDisabled={!isEditable}
-  //       />,
-  //     )
-  //   }
-  //   return starsList
-  // }
-
   useEffect(() => {
     setQuantity(starsQty)
   }, [])

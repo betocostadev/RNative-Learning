@@ -1,9 +1,10 @@
 import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
+import {BasketItemType} from '../../types/producers'
 
 import CustomText from '../CustomText'
 
-const Item = ({item: {name, image}}) => {
+const Item = ({name, image}: BasketItemType) => {
   return (
     <View style={styles.item}>
       <Image source={image} style={styles.image} />

@@ -3,29 +3,30 @@ import {Image, StyleSheet, View, TouchableOpacity} from 'react-native'
 
 import CustomText from '../CustomText'
 import useTexts from '../../hooks/useTexts'
+import {IProducer, TextsType} from '../../types/producers'
 
-// type Props = {
-//   name: string
-//     description: string
-//     price: string
-//     image: ImageSourcePropType
-// }
+type Props = {
+  name: string
+  producer: IProducer
+  description: string
+  price: string
+}
 
-const Details = ({name, producer, description, price}) => {
-  const {buyBtn} = useTexts()
+const Details = ({name, producer, description, price}: Props) => {
+  const texts: TextsType = useTexts()
 
   return (
     <>
       <CustomText style={styles.name}>{name}</CustomText>
       <View style={styles.farm}>
-        <Image source={producer.imagem} style={styles.imageFarm} />
-        <CustomText style={styles.nameFarm}>{producer.nome}</CustomText>
+        <Image source={producer.image} style={styles.imageFarm} />
+        <CustomText style={styles.nameFarm}>{producer.name}</CustomText>
       </View>
       <CustomText style={styles.description}>{description}</CustomText>
       <CustomText style={styles.price}>{price}</CustomText>
 
       <TouchableOpacity style={styles.btn} onPress={() => {}}>
-        <CustomText style={styles.textBtn}>{buyBtn}</CustomText>
+        <CustomText style={styles.textBtn}>{texts.buyBtn}</CustomText>
       </TouchableOpacity>
     </>
   )

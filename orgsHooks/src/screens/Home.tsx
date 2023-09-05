@@ -1,27 +1,34 @@
 import {FlatList, StyleSheet} from 'react-native'
-import TopHome from '../components/Home/Top'
-import useProducers from '../hooks/useProducers'
-import useTexts from '../hooks/useTexts'
+import {TextsType} from '../types/producers'
+import TopHome from '../components/Home/TopHome'
 import CustomText from '../components/CustomText'
 import Producer from '../components/Home/Producer'
+import useProducers from '../hooks/useProducers'
+import useTexts from '../hooks/useTexts'
 
-const Home = ({bestProducers}) => {
+const Home = ({bestProducers}: {bestProducers: boolean}) => {
   const list = useProducers(bestProducers)
-  const {titleProducers} = useTexts()
-  console.log(list)
+  const texts: TextsType = useTexts()
 
   const ListTop = () => {
     return (
       <>
         <TopHome bestProducers={bestProducers} />
-        <CustomText style={styles.title}>{titleProducers}</CustomText>
+        <CustomText style={styles.title}>{texts.titleProducers}</CustomText>
       </>
     )
   }
   return (
     <FlatList
       data={list}
-      renderItem={({item}) => <Producer {...item} onPress={() => {}} />}
+      renderItem={({item}) => (
+        <Producer
+          {...item}
+          // onPress={() => {
+          //   console.log('TODO')
+          // }}
+        />
+      )}
       keyExtractor={({name}) => name}
       ListHeaderComponent={ListTop}
       style={styles.list}

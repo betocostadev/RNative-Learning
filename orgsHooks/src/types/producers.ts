@@ -8,7 +8,7 @@ export interface IProducer {
   baskets: BasketType[]
 }
 
-type BasketType = {
+export type BasketType = {
   details: {
     name: string
     description: string
@@ -18,11 +18,23 @@ type BasketType = {
   items: BasketItemType[]
 }
 
-type BasketItemType = {
+export type BasketItemType = {
   name: string
   image: ImageSourcePropType
 }
 
 export type TypeProducers = {
   list: IProducer[]
+}
+
+export type TextsType = {
+  welcome?: string
+  legend?: string
+  legendBestProducers?: string
+  titleProducers?: string
+  titleProducer?: string
+  titleBaskets?: string
+  topBasket?: string
+  buyBtn?: string
+  titleItems?: string
 }

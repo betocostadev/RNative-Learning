@@ -5,7 +5,7 @@ const texts = {
   titleProducers: 'Producers',
   titleProducer: 'Producer details',
   titleBaskets: 'Baskets',
-  topBasket: 'Basked detatails',
+  topBasket: 'Basket details',
   buyBtn: 'Buy it',
   titleItems: 'Basket items',
 }
