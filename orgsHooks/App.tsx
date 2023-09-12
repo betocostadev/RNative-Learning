@@ -6,6 +6,7 @@
  */
 
 import React from 'react'
+import {NavigationContainer} from '@react-navigation/native'
 import {SafeAreaView, StatusBar, StyleSheet, useColorScheme} from 'react-native'
 
 import {Colors} from 'react-native/Libraries/NewAppScreen'
@@ -28,7 +29,9 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <Home bestProducers={false} />
+      <NavigationContainer>
+        <Home bestProducers={false} />
+      </NavigationContainer>
       {/* {producers.length > 0 && <Basket producer={producers[0]} />} */}
     </SafeAreaView>
   )
