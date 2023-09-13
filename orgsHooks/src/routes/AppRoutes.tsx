@@ -9,7 +9,10 @@ const AppRoutes = () => {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
         <Tab.Screen name="Home" component={ProducerRoutes} />
         <Tab.Screen name="Best Producers" component={BestProducersRoutes} />
       </Tab.Navigator>

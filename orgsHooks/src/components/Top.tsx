@@ -11,12 +11,14 @@ import Gradient from '../assets/gradient.svg'
 import BackSVG from '../assets/back.svg'
 import topImage from '../assets/top.png'
 import CustomText from './CustomText'
+import {useNavigation} from '@react-navigation/native'
 
 const deviceWidth = Dimensions.get('screen').width
 const DEFAULT_HEIGHT = 270
 
 const Top = ({title = '', image = topImage, height = DEFAULT_HEIGHT}) => {
   const styles = funcStyles(height)
+  const navigation = useNavigation()
 
   return (
     <View>
@@ -28,9 +30,9 @@ const Top = ({title = '', image = topImage, height = DEFAULT_HEIGHT}) => {
       />
       <CustomText style={styles.title}>{title}</CustomText>
       <TouchableOpacity
-        // onPress={() => {
-        //   console.log('Hi')
-        // }}
+        onPress={() => {
+          navigation.goBack()
+        }}
         style={styles.backBtn}>
         <BackSVG color="white" style={styles.back} />
       </TouchableOpacity>

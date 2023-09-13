@@ -11,7 +11,7 @@ const ProducerRoutes = ({mainComponent = Home}) => {
   const Stack = createNativeStackNavigator<RootStackParamList>()
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="HomeScreen" component={mainComponent} />
       <Stack.Screen name="Producer" component={Producer} />
     </Stack.Navigator>
