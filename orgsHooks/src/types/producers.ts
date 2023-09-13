@@ -10,13 +10,15 @@ export interface IProducer {
 }
 
 export type BasketType = {
-  details: {
-    name: string
-    description: string
-    price: string
-    image: ImageSourcePropType
-  }
+  details: BasketTypeDetails
   items: BasketItemType[]
+}
+
+export type BasketTypeDetails = {
+  name: string
+  description: string
+  price: string
+  image: ImageSourcePropType
 }
 
 export type BasketItemType = {

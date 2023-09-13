@@ -2,7 +2,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
 import ProducerRoutes from './ProducerRoutes'
-import BestProducersRoutes from './BesProducersRoutes'
+import BestProducersRoutes from './BestProducersRoutes'
 
 const AppRoutes = () => {
   const Tab = createBottomTabNavigator()

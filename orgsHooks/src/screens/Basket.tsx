@@ -7,23 +7,17 @@ import Item from '../components/Basket/Item'
 import useTexts from '../hooks/useTexts'
 
 const Basket = ({producer}: {producer: IProducer}) => {
-  const baskets = producer.baskets
-  const details = baskets[0].details
-  const items = baskets[0].items
   const texts: TextsType = useTexts()
 
   return (
     <>
       <FlatList
-        data={items}
-        renderItem={item => (
-          <Item name={item.item.name} image={item.item.image} />
-        )}
+        data={producer.baskets}
+        renderItem={item => <Item name={} image={item.item.image} />}
         keyExtractor={({name}) => name}
         ListHeaderComponent={() => {
           return (
             <>
-              <Top title={texts.topBasket} />
               <View style={styles.basket}>
                 <Details
                   name={details.name}
