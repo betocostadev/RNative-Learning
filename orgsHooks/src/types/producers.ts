@@ -5,7 +5,8 @@ export interface IProducer {
   image: ImageSourcePropType
   distance: number
   stars: number
-  baskets: BasketType[]
+  onPress?: () => void
+  baskets?: BasketType[]
 }
 
 export type BasketType = {

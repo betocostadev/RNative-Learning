@@ -3,7 +3,7 @@ import {IProducer} from '../../types/producers'
 import Stars from '../Stars'
 import {useMemo, useReducer} from 'react'
 
-const Producer = ({name, image, distance, stars}: IProducer) => {
+const Producer = ({name, image, distance, stars, onPress}: IProducer) => {
   const [selected, toggleSelected] = useReducer(state => !state, false)
 
   const distanceInMeters = (distance: number) => {
@@ -13,12 +13,14 @@ const Producer = ({name, image, distance, stars}: IProducer) => {
   const distanceString = useMemo(() => distanceInMeters(distance), [distance])
 
   return (
-    <TouchableOpacity style={styles.card} onPress={toggleSelected}>
+    <TouchableOpacity style={styles.card} onPress={onPress}>
       <Image style={styles.image} source={image} accessibilityLabel={name} />
       <View style={styles.info}>
         <View>
-          <Text style={styles.name}>{name}</Text>
-          <Stars starsQty={stars} isEditable={selected} isBig={selected} />
+          <TouchableOpacity onPress={toggleSelected}>
+            <Text style={styles.name}>{name}</Text>
+            <Stars starsQty={stars} isEditable={selected} isBig={selected} />
+          </TouchableOpacity>
         </View>
         <Text style={styles.distance}>{distanceString}</Text>
       </View>

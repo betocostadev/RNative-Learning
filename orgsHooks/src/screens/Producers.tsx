@@ -5,10 +5,12 @@ import CustomText from '../components/CustomText'
 import Producer from '../components/Home/Producer'
 import useProducers from '../hooks/useProducers'
 import useTexts from '../hooks/useTexts'
+import {useNavigation} from '@react-navigation/native'
 
 const Producers = ({bestProducers}: {bestProducers: boolean}) => {
   const list = useProducers(bestProducers)
   const texts: TextsType = useTexts()
+  const navigation = useNavigation()
 
   const ListTop = () => {
     return (
@@ -24,9 +26,9 @@ const Producers = ({bestProducers}: {bestProducers: boolean}) => {
       renderItem={({item}) => (
         <Producer
           {...item}
-          // onPress={() => {
-          //   console.log('TODO')
-          // }}
+          onPress={() => {
+            navigation.navigate('Producer', {name: item.name})
+          }}
         />
       )}
       keyExtractor={({name}) => name}
