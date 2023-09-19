@@ -9,21 +9,37 @@ import {
   ScrollView,
 } from 'react-native'
 import styles from './styles'
-import { getUsers } from '../../services/users'
+import { getUserByLogin, getUsers } from '../../services/users'
 
 export default function Main({ navigation }) {
-  const [nomeUsuario, setNomeUsuario] = useState('')
-  const [usuario, setUsuario] = useState({})
+  const [userName, setUserName] = useState('')
+  const [user, setUser] = useState({})
 
   const fetchUsers = async () => {
     try {
-      console.log('Main - Fetch Users')
       const result = await getUsers()
       console.log(result)
     } catch (error) {
       console.log(error)
     }
   }
+
+  const getUserWithLogin = async () => {
+    if (!userName?.length) return
+
+    try {
+      const result = await getUserByLogin(userName)
+
+      if (result.length) {
+        setUser(result[0])
+        console.log('selected user: ')
+        console.log(user)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     fetchUsers()
   }, [])
@@ -62,9 +78,11 @@ export default function Main({ navigation }) {
           placeholder="Busque por um usuário"
           autoCapitalize="none"
           style={styles.entrada}
+          value={userName}
+          onChangeText={setUserName}
         />
 
-        <TouchableOpacity style={styles.botao}>
+        <TouchableOpacity style={styles.botao} onPress={getUserWithLogin}>
           <Text style={styles.textoBotao}>Buscar</Text>
         </TouchableOpacity>
       </View>

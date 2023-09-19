@@ -6,4 +6,10 @@ const getUsers = async () => {
   return response.data
 }
 
-export { getUsers }
+const getUserByLogin = async (login) => {
+  const url = `/users/?login=${login}`
+  const response = await api.get(url)
+  return response.data
+}
+
+export { getUsers, getUserByLogin }
