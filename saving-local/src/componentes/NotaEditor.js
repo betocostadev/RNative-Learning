@@ -8,32 +8,16 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function NotaEditor() {
-  const [texto, setTexto] = useState('')
+import {saveNote} from '../store/notes'
+
+export default function NotaEditor({getNotes}) {
+  const [text, setText] = useState('')
   const [modalVisivel, setModalVisivel] = useState(false)
 
-  const saveNote = async () => {
-    const oneNote = {
-      id: '1',
-      text: texto,
-    }
-    try {
-      await AsyncStorage.setItem(oneNote.id, oneNote.text)
-      showNote()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const showNote = async () => {
-    try {
-      console.log(await AsyncStorage.getItem('1'))
-      console.log(await AsyncStorage.getAllKeys())
-    } catch (error) {
-      console.log(error)
-    }
+  const addNote = async () => {
+    await saveNote({text})
+    getNotes()
   }
 
   return (
@@ -48,28 +32,28 @@ export default function NotaEditor() {
         <View style={estilos.centralizaModal}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={estilos.modal}>
-              <Text style={estilos.modalTitulo}>Criar nota</Text>
-              <Text style={estilos.modalSubTitulo}>Conteúdo da nota</Text>
+              <Text style={estilos.modalTitulo}>Add note</Text>
+              <Text style={estilos.modalSubTitulo}>Note contents</Text>
               <TextInput
                 style={estilos.modalInput}
                 multiline={true}
                 numberOfLines={3}
-                onChangeText={novoTexto => setTexto(novoTexto)}
-                placeholder="Digite aqui seu lembrete"
-                value={texto}
+                onChangeText={newText => setText(newText)}
+                placeholder="Type your text here"
+                value={text}
               />
               <View style={estilos.modalBotoes}>
                 <TouchableOpacity
                   style={estilos.modalBotaoSalvar}
-                  onPress={saveNote}>
-                  <Text style={estilos.modalBotaoTexto}>Salvar</Text>
+                  onPress={addNote}>
+                  <Text style={estilos.modalBotaoTexto}>Save</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={estilos.modalBotaoCancelar}
                   onPress={() => {
                     setModalVisivel(false)
                   }}>
-                  <Text style={estilos.modalBotaoTexto}>Cancelar</Text>
+                  <Text style={estilos.modalBotaoTexto}>Cancel</Text>
                 </TouchableOpacity>
               </View>
             </View>
