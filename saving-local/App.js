@@ -1,7 +1,8 @@
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native'
-import NotaEditor from './src/componentes/NotaEditor'
+import {FlatList, SafeAreaView, StatusBar, StyleSheet} from 'react-native'
+import NoteEditor from './src/componentes/NoteEditor'
 import {getAllNotes} from './src/store/notes'
 import {useEffect, useState} from 'react'
+import {Note} from './src/componentes/Note'
 
 export default function App() {
   const [notes, setNotes] = useState([])
@@ -10,7 +11,6 @@ export default function App() {
     const storedNotes = await getAllNotes()
     if (storedNotes.length) {
       setNotes(storedNotes)
-      console.log(notes)
     }
   }
 
@@ -19,14 +19,19 @@ export default function App() {
   }, [])
 
   return (
-    <SafeAreaView style={estilos.container}>
-      <NotaEditor getNotes={getNotes} />
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={notes}
+        renderItem={note => <Note id={note.item.id} text={note.item.text} />}
+        keyExtractor={note => note.id}
+      />
+      <NoteEditor getNotes={getNotes} />
       <StatusBar />
     </SafeAreaView>
   )
 }
 
-const estilos = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'stretch',

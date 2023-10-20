@@ -11,7 +11,7 @@ import {
 
 import {saveNote} from '../store/notes'
 
-export default function NotaEditor({getNotes}) {
+export default function NoteEditor({getNotes}) {
   const [text, setText] = useState('')
   const [modalVisivel, setModalVisivel] = useState(false)
 

@@ -1,18 +1,19 @@
 import React from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 
-export function Nota() {
-  const categorias = {
-    Pessoal: '#FF924F',
-    Outros: '#00911F',
-    Trabalho: '#2F71EB',
+export function Note({id, text}) {
+  const categories = {
+    Personal: '#FF924F',
+    Others: '#00911F',
+    Work: '#2F71EB',
   }
-  const style = styleFunction(categorias['Pessoal'])
+
+  const style = styleFunction(categories['Personal'])
 
   return (
-    <View style={style.cartao}>
-      <Text style={style.texto} numberOfLines={5}>
-        Lorem ipsum
+    <View style={style.card}>
+      <Text style={style.text} numberOfLines={5}>
+        {text}
       </Text>
     </View>
   )
@@ -20,7 +21,7 @@ export function Nota() {
 
 const styleFunction = cor =>
   StyleSheet.create({
-    cartao: {
+    card: {
       borderRadius: 8,
       backgroundColor: '#ffffff',
       paddingVertical: 8,
@@ -38,19 +39,19 @@ const styleFunction = cor =>
       shadowRadius: 2.62,
       elevation: 4,
     },
-    titulo: {
+    title: {
       fontSize: 24,
       fontWeight: '700',
       marginBottom: 4,
     },
-    categoria: {
+    category: {
       borderRadius: 4,
       backgroundColor: cor,
       padding: 4,
       color: '#FAFAFA',
       alignSelf: 'flex-start',
     },
-    texto: {
+    text: {
       lineHeight: 28,
     },
   })

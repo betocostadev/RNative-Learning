@@ -5,8 +5,9 @@ const getAllNotes = async () => {
   try {
     const storedKeys = await AsyncStorage.getAllKeys()
     const notes = await AsyncStorage.multiGet(storedKeys)
-    console.log(notes)
-    return notes
+    return notes?.length
+      ? notes.map(note => ({id: note[0], text: note[1]}))
+      : []
   } catch (error) {
     console.log(error)
   }
