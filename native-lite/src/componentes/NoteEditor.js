@@ -1,3 +1,4 @@
+import {Picker} from '@react-native-picker/picker'
 import React, {useState} from 'react'
 import {
   Modal,
@@ -10,7 +11,9 @@ import {
 } from 'react-native'
 
 export default function NoteEditor({getNotes}) {
+  const [title, setTitle] = useState('')
   const [text, setText] = useState('')
+  const [category, setCategory] = useState('Personal')
   const [modalVisible, setModalVisible] = useState(false)
 
   const addNote = async () => {
@@ -32,6 +35,25 @@ export default function NoteEditor({getNotes}) {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.modal}>
               <Text style={styles.modalTitle}>Add note</Text>
+              <Text style={styles.modalSubTitle}>Note title</Text>
+              <TextInput
+                style={styles.modalInput}
+                multiline={true}
+                numberOfLines={1}
+                onChangeText={newText => setTitle(newText)}
+                placeholder="Type your note title"
+                value={title}
+              />
+              <View style={styles.modalPicker}>
+                <Text style={styles.modalSubTitle}>Category</Text>
+                <Picker
+                  selectedValue={category}
+                  onValueChange={itemValue => setCategory(itemValue)}>
+                  <Picker.Item label="Personal" value="personal" />
+                  <Picker.Item label="Work" value="work" />
+                  <Picker.Item label="Others" value="others" />
+                </Picker>
+              </View>
               <Text style={styles.modalSubTitle}>Note contents</Text>
               <TextInput
                 style={styles.modalInput}
@@ -59,10 +81,10 @@ export default function NoteEditor({getNotes}) {
       </Modal>
       <TouchableOpacity
         onPress={() => {
-          setModalVisivel(true)
+          setModalVisible(true)
         }}
-        style={styles.adicionarMemo}>
-        <Text style={styles.adicionarMemoTexto}>+</Text>
+        style={styles.addMemo}>
+        <Text style={styles.addMemoText}>+</Text>
       </TouchableOpacity>
     </>
   )

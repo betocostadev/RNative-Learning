@@ -8,18 +8,20 @@ export function Note({id, text}) {
     Work: '#2F71EB',
   }
 
-  const style = styleFunction(categories['Personal'])
+  const styles = styleFunction(categories['Personal'])
 
   return (
-    <View style={style.card}>
-      <Text style={style.text} numberOfLines={5}>
+    <View style={styles.card}>
+      <Text style={styles.title}> Title </Text>
+      <Text style={styles.category}> Category </Text>
+      <Text style={styles.text} numberOfLines={5}>
         {text}
       </Text>
     </View>
   )
 }
 
-const styleFunction = cor =>
+const styleFunction = color =>
   StyleSheet.create({
     card: {
       borderRadius: 8,
@@ -29,7 +31,7 @@ const styleFunction = cor =>
       marginHorizontal: 16,
       marginBottom: 8,
       borderTopWidth: 5,
-      borderColor: cor,
+      borderColor: color,
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
@@ -46,7 +48,7 @@ const styleFunction = cor =>
     },
     category: {
       borderRadius: 4,
-      backgroundColor: cor,
+      backgroundColor: color,
       padding: 4,
       color: '#FAFAFA',
       alignSelf: 'flex-start',
