@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "saving-local-asyncstorage",
-    "slug": "saving-local-asyncstorage",
+    "name": "native-lite",
+    "slug": "native-lite",
     "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
