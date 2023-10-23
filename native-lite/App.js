@@ -1,21 +1,22 @@
 import {FlatList, SafeAreaView, StatusBar, StyleSheet} from 'react-native'
 import NoteEditor from './src/componentes/NoteEditor'
-import {getAllNotes} from './src/store/notes'
 import {useEffect, useState} from 'react'
 import {Note} from './src/componentes/Note'
+import {createTable} from './src/services/notes'
 
 export default function App() {
   const [notes, setNotes] = useState([])
 
   const getNotes = async () => {
-    const storedNotes = await getAllNotes()
-    if (storedNotes.length) {
-      setNotes(storedNotes)
-    }
+    // const storedNotes = await getAllNotes()
+    // if (storedNotes.length) {
+    //   setNotes(storedNotes)
+    // }
   }
 
   useEffect(() => {
-    getNotes()
+    // getNotes()
+    createTable()
   }, [])
 
   return (

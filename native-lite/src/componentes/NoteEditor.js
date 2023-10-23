@@ -9,15 +9,14 @@ import {
   ScrollView,
 } from 'react-native'
 
-import {saveNote} from '../store/notes'
-
 export default function NoteEditor({getNotes}) {
   const [text, setText] = useState('')
-  const [modalVisivel, setModalVisivel] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   const addNote = async () => {
-    await saveNote({text})
-    getNotes()
+    const newNote = {
+      text,
+    }
   }
 
   return (
@@ -25,35 +24,33 @@ export default function NoteEditor({getNotes}) {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisivel}
+        visible={modalVisible}
         onRequestClose={() => {
-          setModalVisivel(false)
+          setModalVisible(false)
         }}>
-        <View style={estilos.centralizaModal}>
+        <View style={styles.centerModal}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={estilos.modal}>
-              <Text style={estilos.modalTitulo}>Add note</Text>
-              <Text style={estilos.modalSubTitulo}>Note contents</Text>
+            <View style={styles.modal}>
+              <Text style={styles.modalTitle}>Add note</Text>
+              <Text style={styles.modalSubTitle}>Note contents</Text>
               <TextInput
-                style={estilos.modalInput}
+                style={styles.modalInput}
                 multiline={true}
                 numberOfLines={3}
                 onChangeText={newText => setText(newText)}
                 placeholder="Type your text here"
                 value={text}
               />
-              <View style={estilos.modalBotoes}>
-                <TouchableOpacity
-                  style={estilos.modalBotaoSalvar}
-                  onPress={addNote}>
-                  <Text style={estilos.modalBotaoTexto}>Save</Text>
+              <View style={styles.modalButtons}>
+                <TouchableOpacity style={styles.modalBtnSave} onPress={addNote}>
+                  <Text style={styles.modalBtnText}>Save</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={estilos.modalBotaoCancelar}
+                  style={styles.modalBtnCancel}
                   onPress={() => {
-                    setModalVisivel(false)
+                    setModalVisible(false)
                   }}>
-                  <Text style={estilos.modalBotaoTexto}>Cancel</Text>
+                  <Text style={styles.modalBtnText}>Cancel</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -64,15 +61,15 @@ export default function NoteEditor({getNotes}) {
         onPress={() => {
           setModalVisivel(true)
         }}
-        style={estilos.adicionarMemo}>
-        <Text style={estilos.adicionarMemoTexto}>+</Text>
+        style={styles.adicionarMemo}>
+        <Text style={styles.adicionarMemoTexto}>+</Text>
       </TouchableOpacity>
     </>
   )
 }
 
-const estilos = StyleSheet.create({
-  centralizaModal: {
+const styles = StyleSheet.create({
+  centerModal: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -95,7 +92,7 @@ const estilos = StyleSheet.create({
     shadowRadius: 6.27,
     elevation: 10,
   },
-  modalTitulo: {
+  modalTitle: {
     fontSize: 28,
     fontWeight: '600',
     marginBottom: 18,
@@ -113,40 +110,40 @@ const estilos = StyleSheet.create({
     borderColor: '#EEEEEE',
     marginBottom: 12,
   },
-  modalSubTitulo: {
+  modalSubTitle: {
     fontSize: 14,
     marginBottom: 8,
     fontWeight: '600',
   },
-  modalBotoes: {
+  modalButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  modalBotaoSalvar: {
+  modalBtnSave: {
     backgroundColor: '#2ea805',
     borderRadius: 5,
     padding: 8,
     width: 80,
     alignItems: 'center',
   },
-  modalBotaoDeletar: {
+  modalBtnDelete: {
     backgroundColor: '#d62a18',
     borderRadius: 5,
     padding: 8,
     width: 80,
     alignItems: 'center',
   },
-  modalBotaoCancelar: {
+  modalBtnCancel: {
     backgroundColor: '#057fa8',
     borderRadius: 5,
     padding: 8,
     width: 80,
     alignItems: 'center',
   },
-  modalBotaoTexto: {
+  modalBtnText: {
     color: '#FFFFFF',
   },
-  adicionarMemo: {
+  addMemo: {
     backgroundColor: '#54ba32',
     justifyContent: 'center',
     height: 64,
@@ -166,7 +163,7 @@ const estilos = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
   },
-  adicionarMemoTexto: {
+  addMemoText: {
     fontSize: 32,
     lineHeight: 40,
     color: '#FFFFFF',
