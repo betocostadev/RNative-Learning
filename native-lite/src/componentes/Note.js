@@ -1,19 +1,19 @@
 import React from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 
-export function Note({id, text}) {
+export function Note({id, title, category, text}) {
   const categories = {
     Personal: '#FF924F',
     Others: '#00911F',
     Work: '#2F71EB',
   }
 
-  const styles = styleFunction(categories['Personal'])
+  const styles = styleFunction(categories[category])
 
   return (
     <View style={styles.card}>
-      <Text style={styles.title}> Title </Text>
-      <Text style={styles.category}> Category </Text>
+      <Text style={styles.title}> {title} </Text>
+      <Text style={styles.category}> {category} </Text>
       <Text style={styles.text} numberOfLines={5}>
         {text}
       </Text>

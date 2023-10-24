@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native'
+import {createNote} from '../services/notes'
 
 export default function NoteEditor({getNotes}) {
   const [title, setTitle] = useState('')
@@ -17,8 +18,23 @@ export default function NoteEditor({getNotes}) {
   const [modalVisible, setModalVisible] = useState(false)
 
   const addNote = async () => {
-    const newNote = {
-      text,
+    try {
+      const newNote = {
+        title,
+        category,
+        text,
+      }
+      const response = await createNote(newNote)
+
+      if (response) {
+        setTitle('')
+        setText('')
+        setCategory('Personal')
+      }
+
+      getNotes()
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -49,9 +65,9 @@ export default function NoteEditor({getNotes}) {
                 <Picker
                   selectedValue={category}
                   onValueChange={itemValue => setCategory(itemValue)}>
-                  <Picker.Item label="Personal" value="personal" />
-                  <Picker.Item label="Work" value="work" />
-                  <Picker.Item label="Others" value="others" />
+                  <Picker.Item label="Personal" value="Personal" />
+                  <Picker.Item label="Work" value="Work" />
+                  <Picker.Item label="Others" value="Others" />
                 </Picker>
               </View>
               <Text style={styles.modalSubTitle}>Note contents</Text>
