@@ -5,7 +5,9 @@ import {
   INSERT_INTO,
   PRIMARY_KEY_AUTOINCREMENT,
   SELECT,
+  UPDATE,
   VALUES,
+  WHERE,
 } from '../utils/constants'
 
 const db = DatabaseConnection.getConnection()
@@ -26,6 +28,20 @@ export async function createNote(note) {
         [note.title, note.category, note.text],
         () => {
           resolve('Note added!')
+        },
+      )
+    })
+  })
+}
+
+export async function updateNote(note) {
+  return new Promise(resolve => {
+    db.transaction(transaction => {
+      transaction.executeSql(
+        `${UPDATE} Notes ${SET} title = ?, category = ?, text = ? ${WHERE} id = ?;`,
+        [note.title, note.category, note.text, note.id],
+        () => {
+          resolve('Note updated!')
         },
       )
     })

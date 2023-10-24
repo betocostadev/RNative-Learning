@@ -6,12 +6,28 @@ import {createTable, getAllNotes} from './src/services/notes'
 
 export default function App() {
   const [notes, setNotes] = useState([])
+  const [selectedNote, setSelectedNote] = useState({})
 
   const getNotes = async () => {
     const storedNotes = await getAllNotes()
     console.log(storedNotes)
     if (storedNotes.length) {
       setNotes(storedNotes)
+    }
+  }
+
+  const selectNote = id => {
+    if (!id) {
+      setSelectedNote({})
+      return
+    }
+
+    try {
+      const note = notes.find(note => note.id === id)
+      setSelectedNote(note)
+    } catch (error) {
+      setSelectedNote({})
+      console.log(error)
     }
   }
 
@@ -30,11 +46,16 @@ export default function App() {
             title={note.item.title}
             category={note.item.category}
             text={note.item.text}
+            selectNote={selectNote}
           />
         )}
         keyExtractor={note => note.id}
       />
-      <NoteEditor getNotes={getNotes} />
+      <NoteEditor
+        getNotes={getNotes}
+        selectedNote={selectedNote}
+        selectNote={selectNote}
+      />
       <StatusBar />
     </SafeAreaView>
   )

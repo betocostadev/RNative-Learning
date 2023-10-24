@@ -1,5 +1,5 @@
 import {Picker} from '@react-native-picker/picker'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
   Modal,
   View,
@@ -11,11 +11,19 @@ import {
 } from 'react-native'
 import {createNote} from '../services/notes'
 
-export default function NoteEditor({getNotes}) {
+export default function NoteEditor({getNotes, selectedNote, selectNote}) {
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [category, setCategory] = useState('Personal')
   const [modalVisible, setModalVisible] = useState(false)
+
+  const clearModal = () => {
+    setTitle('')
+    setCategory('Personal')
+    setText('')
+    setModalVisible(false)
+    selectNote(undefined)
+  }
 
   const addNote = async () => {
     try {
@@ -27,9 +35,7 @@ export default function NoteEditor({getNotes}) {
       const response = await createNote(newNote)
 
       if (response) {
-        setTitle('')
-        setText('')
-        setCategory('Personal')
+        clearModal()
       }
 
       getNotes()
@@ -37,6 +43,20 @@ export default function NoteEditor({getNotes}) {
       console.log(error)
     }
   }
+
+  const addSelectedNoteData = () => {
+    const {title, category, text} = selectedNote
+    setTitle(title)
+    setCategory(category)
+    setText(text)
+  }
+
+  useEffect(() => {
+    if (selectedNote.id) {
+      addSelectedNoteData()
+      setModalVisible(true)
+    }
+  }, [selectedNote])
 
   return (
     <>
