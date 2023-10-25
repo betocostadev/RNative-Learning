@@ -63,6 +63,20 @@ export async function deleteNote(note) {
   })
 }
 
+export async function getNotesByFilter(cat) {
+  return new Promise(resolve => {
+    db.transaction(transaction => {
+      transaction.executeSql(
+        `${SELECT_ALL_FROM} Notes ${WHERE} category = ?;`,
+        [cat],
+        (transaction, result) => {
+          resolve(result.rows._array)
+        },
+      )
+    })
+  })
+}
+
 export async function getAllNotes() {
   return new Promise(resolve => {
     db.transaction(transaction => {
