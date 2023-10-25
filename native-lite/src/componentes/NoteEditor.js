@@ -9,7 +9,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native'
-import {createNote, updateNote} from '../services/notes'
+import {createNote, deleteNote, updateNote} from '../services/notes'
 
 export default function NoteEditor({getNotes, selectedNote, selectNote}) {
   const [title, setTitle] = useState('')
@@ -60,6 +60,20 @@ export default function NoteEditor({getNotes, selectedNote, selectNote}) {
         clearModal()
       }
 
+      getNotes()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const removeNote = async () => {
+    try {
+      const note = {id: selectedNote.id}
+      const response = await deleteNote(note)
+
+      if (response) {
+        clearModal()
+      }
       getNotes()
     } catch (error) {
       console.log(error)
@@ -130,6 +144,13 @@ export default function NoteEditor({getNotes, selectedNote, selectNote}) {
                   onPress={noteToUpdate ? editNote : addNote}>
                   <Text style={styles.modalBtnText}>Save</Text>
                 </TouchableOpacity>
+                {noteToUpdate && (
+                  <TouchableOpacity
+                    style={styles.modalBtnDelete}
+                    onPress={removeNote}>
+                    <Text style={styles.modalBtnText}>Delete</Text>
+                  </TouchableOpacity>
+                )}
                 <TouchableOpacity
                   style={styles.modalBtnCancel}
                   onPress={clearModal}>

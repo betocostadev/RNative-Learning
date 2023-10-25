@@ -1,10 +1,10 @@
 import {DatabaseConnection} from './sqlite'
 import {
   CREATE_NEW_TABLE,
-  FROM,
+  DELETE_FROM,
   INSERT_INTO,
   PRIMARY_KEY_AUTOINCREMENT,
-  SELECT,
+  SELECT_ALL_FROM,
   SET,
   UPDATE,
   VALUES,
@@ -49,11 +49,25 @@ export async function updateNote(note) {
   })
 }
 
+export async function deleteNote(note) {
+  return new Promise(resolve => {
+    db.transaction(transaction => {
+      transaction.executeSql(
+        `${DELETE_FROM} Notes ${WHERE} id = ?;`,
+        [note.id],
+        () => {
+          resolve('Note deleted!')
+        },
+      )
+    })
+  })
+}
+
 export async function getAllNotes() {
   return new Promise(resolve => {
     db.transaction(transaction => {
       transaction.executeSql(
-        `${SELECT} * ${FROM} Notes;`,
+        `${SELECT_ALL_FROM} Notes;`,
         [],
         (transaction, result) => {
           resolve(result.rows._array)

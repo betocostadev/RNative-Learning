@@ -42,7 +42,7 @@ const styleFunction = color =>
       elevation: 4,
     },
     title: {
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: '700',
       marginBottom: 4,
     },
