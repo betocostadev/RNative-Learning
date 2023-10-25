@@ -9,19 +9,21 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native'
-import {createNote} from '../services/notes'
+import {createNote, updateNote} from '../services/notes'
 
 export default function NoteEditor({getNotes, selectedNote, selectNote}) {
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [category, setCategory] = useState('Personal')
   const [modalVisible, setModalVisible] = useState(false)
+  const [noteToUpdate, setNoteToUpdate] = useState(false)
 
   const clearModal = () => {
     setTitle('')
     setCategory('Personal')
     setText('')
     setModalVisible(false)
+    setNoteToUpdate(false)
     selectNote(undefined)
   }
 
@@ -44,6 +46,26 @@ export default function NoteEditor({getNotes, selectedNote, selectNote}) {
     }
   }
 
+  const editNote = async () => {
+    try {
+      const note = {
+        title,
+        category,
+        text,
+        id: selectedNote.id,
+      }
+      const response = await updateNote(note)
+
+      if (response) {
+        clearModal()
+      }
+
+      getNotes()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const addSelectedNoteData = () => {
     const {title, category, text} = selectedNote
     setTitle(title)
@@ -54,6 +76,7 @@ export default function NoteEditor({getNotes, selectedNote, selectNote}) {
   useEffect(() => {
     if (selectedNote.id) {
       addSelectedNoteData()
+      setNoteToUpdate(true)
       setModalVisible(true)
     }
   }, [selectedNote])
@@ -70,7 +93,9 @@ export default function NoteEditor({getNotes, selectedNote, selectNote}) {
         <View style={styles.centerModal}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.modal}>
-              <Text style={styles.modalTitle}>Add note</Text>
+              <Text style={styles.modalTitle}>
+                {noteToUpdate ? 'Edit note' : 'Add note'}
+              </Text>
               <Text style={styles.modalSubTitle}>Note title</Text>
               <TextInput
                 style={styles.modalInput}
@@ -100,14 +125,14 @@ export default function NoteEditor({getNotes, selectedNote, selectNote}) {
                 value={text}
               />
               <View style={styles.modalButtons}>
-                <TouchableOpacity style={styles.modalBtnSave} onPress={addNote}>
+                <TouchableOpacity
+                  style={styles.modalBtnSave}
+                  onPress={noteToUpdate ? editNote : addNote}>
                   <Text style={styles.modalBtnText}>Save</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.modalBtnCancel}
-                  onPress={() => {
-                    setModalVisible(false)
-                  }}>
+                  onPress={clearModal}>
                   <Text style={styles.modalBtnText}>Cancel</Text>
                 </TouchableOpacity>
               </View>
