@@ -1,32 +1,45 @@
-import React from 'react';
+import React from 'react'
 
-import { Text, View, StyleSheet } from 'react-native';
-import Icone from '../../../componentes/Icone';
+import { Text, View, StyleSheet } from 'react-native'
+import Icone from '../../../componentes/Icone'
 
-import { formataDecimalParaReal } from '../../../negocio/formatadores/moeda';
-import { formataMaiorLanceDoLeilao } from '../../../negocio/formatadores/lance';
+import { formataDecimalParaReal } from '../../../negocio/formatadores/moeda'
+import { formataMaiorLanceDoLeilao } from '../../../negocio/formatadores/lance'
 
-export default function Topo({ nome, descricao, lances, valorInicial, cor, icone }) {
-  const maiorLance = formataMaiorLanceDoLeilao(lances, valorInicial);
+export default function Topo({
+  nome,
+  descricao,
+  lances,
+  valorInicial,
+  cor,
+  icone,
+}) {
+  const maiorLance = formataMaiorLanceDoLeilao(lances, valorInicial)
 
-  return <>
-    <Icone cor={cor} nome={icone} style={estilos.topo} />
-    <View style={estilos.info}>
-      <Text style={estilos.nome}>{nome}</Text>
-      <Text style={estilos.descricao}>{descricao}</Text>
-      <View style={estilos.resumo}>
-        <View style={estilos.melhorLance}>
-          <Text style={estilos.legendaLance}>Melhor Lance</Text>
-          <Text style={estilos.valorLance}>{formataDecimalParaReal(maiorLance)}</Text>
-        </View>
-        <View style={estilos.divisor} />
-        <View style={estilos.lanceInicial}>
-          <Text style={estilos.legendaLance}>Valor Inicial</Text>
-          <Text style={estilos.valorLance}>{formataDecimalParaReal(valorInicial)}</Text>
+  return (
+    <>
+      <Icone cor={cor} nome={icone} style={estilos.topo} />
+      <View style={estilos.info}>
+        <Text style={estilos.nome}>{nome}</Text>
+        <Text style={estilos.descricao}>{descricao}</Text>
+        <View style={estilos.resumo}>
+          <View style={estilos.melhorLance}>
+            <Text style={estilos.legendaLance}>Melhor Lance</Text>
+            <Text style={estilos.valorLance}>
+              {formataDecimalParaReal(maiorLance)}
+            </Text>
+          </View>
+          <View style={estilos.divisor} />
+          <View style={estilos.lanceInicial}>
+            <Text style={estilos.legendaLance}>Valor Inicial</Text>
+            <Text style={estilos.valorLance}>
+              {formataDecimalParaReal(valorInicial)}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
-  </>    
+    </>
+  )
 }
 
 const estilos = StyleSheet.create({
@@ -60,7 +73,7 @@ const estilos = StyleSheet.create({
     alignItems: 'stretch',
 
     borderRadius: 8,
-    
+
     backgroundColor: '#F3F2F2',
 
     paddingVertical: 16,
@@ -83,4 +96,4 @@ const estilos = StyleSheet.create({
   lanceInicial: {
     alignItems: 'flex-end',
   },
-});
+})

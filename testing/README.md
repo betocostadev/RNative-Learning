@@ -46,3 +46,10 @@ Para instalar o React Native com Expo na sua máquina, siga os passos do [artigo
 ## 📚 Mais informações do curso
 
 https://www.alura.com.br/curso-online-react-native-criando-testes-aplicacao
+
+## Informações para rodar o projeto
+
+Rode o projeto com `npx expo start --clear` e pegue o IP mostrado pelo Expo.
+Adicione este IP no script **"api"** do arquivo **package.json**.
+Adicione este IP também no arquivo **apiLeiloes.js** dentro de **src/servicos**.
+Execute `npm run api` para iniciar o DB e popular os dados no App.

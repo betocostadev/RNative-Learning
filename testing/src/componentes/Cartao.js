@@ -1,11 +1,18 @@
-import React from 'react';
+import React from 'react'
 
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native'
 
-export default function Cartao({ children, style, Componente = View, ...props }) {
-  return <Componente style={[estilos.cartao, style]} {...props}>
-    {children}
-  </Componente>
+export default function Cartao({
+  children,
+  style,
+  Componente = View,
+  ...props
+}) {
+  return (
+    <Componente style={[estilos.cartao, style]} {...props}>
+      {children}
+    </Componente>
+  )
 }
 
 const estilos = StyleSheet.create({
@@ -14,7 +21,7 @@ const estilos = StyleSheet.create({
 
     backgroundColor: '#fff',
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -23,5 +30,5 @@ const estilos = StyleSheet.create({
     shadowRadius: 2.62,
 
     elevation: 4,
-  }
-});
+  },
+})

@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
-import { obtemLeiloes } from '../repositorio/leilao';
+import { useState, useEffect } from 'react'
+import { obtemLeiloes } from '../repositorio/leilao'
 
 export default function useListaLeiloes() {
-  const [leiloes, setLeiloes] = useState([]);
+  const [leiloes, setLeiloes] = useState([])
 
   const atualizaLeiloes = async () => {
-    const leiloesAtualizados = await obtemLeiloes();
-    setLeiloes(leiloesAtualizados);
-  };
+    const leiloesAtualizados = await obtemLeiloes()
+    setLeiloes(leiloesAtualizados)
+  }
 
   useEffect(() => {
-    atualizaLeiloes();
-  }, []);
+    atualizaLeiloes()
+  }, [])
 
-  return [ leiloes, atualizaLeiloes ];
+  return [leiloes, atualizaLeiloes]
 }
