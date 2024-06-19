@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
 
-export default function Feed() {
+export default function New() {
   return (
     <View style={styles.container}>
-      <Text>Feed</Text>
+      <Text>New</Text>
     </View>
   )
 }
