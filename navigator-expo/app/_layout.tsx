@@ -52,11 +52,27 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme()
 
+  // Will use the name="file" as the title for the screen.
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen
+          name="modal"
+          options={{
+            presentation: 'modal',
+            title: 'Modal',
+            headerTitleStyle: { fontWeight: 'bold' },
+          }}
+        />
+        <Stack.Screen
+          name="dnav"
+          options={{
+            headerShown: false,
+            title: 'Drawer Nav',
+            headerTitleStyle: { fontWeight: 'bold' },
+          }}
+        />
       </Stack>
     </ThemeProvider>
   )
