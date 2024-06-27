@@ -1,11 +1,20 @@
 import { View, Text } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import homeStyles from './Style'
+import { styles } from './Style'
+import BatLogo from '../../components/BatLogo/BatLogo'
+import BatTextInput from '../../components/BatTextInput/BatTextInput'
 
 export default function Home() {
   return (
-    <View style={homeStyles.container}>
-      <Text>Home!</Text>
+    <View style={styles.appContainer}>
+      <View style={styles.logoContainer}>
+        <BatLogo />
+      </View>
+
+      <View>
+        <BatTextInput />
+      </View>
+      <Text>Home?</Text>
       <StatusBar style="auto" />
     </View>
   )
