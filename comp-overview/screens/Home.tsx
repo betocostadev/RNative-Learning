@@ -13,8 +13,15 @@ import {
 } from 'react-native'
 import { useState } from 'react'
 import Logo from '../assets/native.png'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Home() {
+  const navigation = useNavigation()
+
+  const [email, setEmail] = useState('' as string)
+  const [phone, setPhone] = useState('' as string)
+  const [phoneFields, setPhoneFields] = useState(false as boolean)
+
   const logData = (message: string, event: any) => {
     Alert.alert(message)
     console.log('Event:', event)
@@ -27,14 +34,10 @@ export default function Home() {
     )
   }
 
-  const [email, setEmail] = useState('' as string)
-  const [phone, setPhone] = useState('' as string)
-  const [phoneFields, setPhoneFields] = useState(false as boolean)
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <ScrollView>
-        <View style={styles.container}>
+        <View style={styles.container} accessibilityLabel="article">
           <Text style={styles.title}>Components Overview</Text>
           <Image source={Logo} style={styles.logo} />
 
@@ -114,6 +117,13 @@ export default function Home() {
               </Text>
             </Text>
           </Text>
+          <Text style={styles.linksTitle}>Learn more</Text>
+          <View style={styles.linksContainer}>
+            <Button
+              title="Flex"
+              onPress={() => navigation.navigate('Flex' as never)}
+            />
+          </View>
           <StatusBar style="auto" />
         </View>
       </ScrollView>
@@ -165,5 +175,15 @@ const styles = StyleSheet.create({
     height: 200,
     borderWidth: 1,
     borderRadius: 4,
+  },
+  linksContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  linksTitle: {
+    fontSize: 16,
+    margin: 10,
+    fontWeight: 'bold',
   },
 })
