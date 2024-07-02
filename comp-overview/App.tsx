@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TextInput,
   View,
@@ -19,11 +20,16 @@ export default function App() {
     console.log('Event:', event)
   }
 
-  const logEmailField = () => {
-    Alert.alert('Button Pressed', `Email: ${email}`)
+  const logInformation = () => {
+    Alert.alert(
+      'Button Pressed',
+      `Email: ${email} ${phone ? `Phone: ${phone}` : ''}`
+    )
   }
 
   const [email, setEmail] = useState('' as string)
+  const [phone, setPhone] = useState('' as string)
+  const [phoneFields, setPhoneFields] = useState(false as boolean)
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -31,6 +37,31 @@ export default function App() {
         <View style={styles.container}>
           <Text style={styles.title}>Components Overview</Text>
           <Image source={Logo} style={styles.logo} />
+
+          <View style={styles.phoneContainer}>
+            <Text>Phone</Text>
+            <Switch value={phoneFields} onValueChange={setPhoneFields} />
+          </View>
+
+          {phoneFields && (
+            <View
+              style={{
+                width: '100%',
+                flex: 1,
+                alignItems: 'center',
+              }}
+            >
+              <TextInput
+                style={styles.input}
+                onChange={(event) => setPhone(event.nativeEvent.text)}
+                keyboardType="phone-pad"
+                accessibilityLabel="Phone Input"
+                placeholder="Enter your phone number"
+                returnKeyType="done"
+                value={phone}
+              />
+            </View>
+          )}
 
           <TextInput
             style={styles.input}
@@ -43,9 +74,13 @@ export default function App() {
           />
 
           <Button
-            title="Send email"
-            onPress={() => logEmailField()}
-            disabled={email.length < 5}
+            title={phoneFields ? 'Send information' : 'Send email'}
+            onPress={() => logInformation()}
+            disabled={
+              phoneFields
+                ? phone.length < 5 || email.length < 6
+                : email.length < 6
+            }
           />
 
           <View
@@ -92,6 +127,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  phoneContainer: {
+    marginTop: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '60%',
   },
   title: {
     margin: 10,
