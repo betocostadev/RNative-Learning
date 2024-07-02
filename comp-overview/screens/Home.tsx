@@ -123,6 +123,10 @@ export default function Home() {
               title="Flex"
               onPress={() => navigation.navigate('Flex' as never)}
             />
+            <Button
+              title="Events"
+              onPress={() => navigation.navigate('Events' as never)}
+            />
           </View>
           <StatusBar style="auto" />
         </View>

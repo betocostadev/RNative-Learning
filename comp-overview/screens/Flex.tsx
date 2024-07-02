@@ -129,6 +129,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'gray',
   },
+  title: {
+    margin: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
   // Changed the height of the flexSectionOne to 250
   // Flex: 1 isn't used in this example due to the height being set
   // Change this to use a ScrollView
@@ -162,10 +167,5 @@ const styles = StyleSheet.create({
     height: 350,
     borderWidth: 1,
     borderColor: 'blue',
-  },
-  title: {
-    margin: 10,
-    fontSize: 18,
-    fontWeight: 'bold',
   },
 })
