@@ -43,6 +43,11 @@ export default function Flex() {
             <Box color="purple" />
           </View>
           <View style={styles.flexSectionThree}>
+            <View style={{ alignSelf: 'flex-start' }}>
+              <SmallBox color="red" />
+              <SmallBox color="green" />
+              <SmallBox color="blue" />
+            </View>
             <SmallBox color="purple" />
             <SmallBox color="pink" />
             <SmallBox color="gold" />
@@ -71,6 +76,44 @@ export default function Flex() {
               <SmallBox color="orange" />
               <SmallBox color="red" />
               <SmallBox color="magenta" />
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                alignContent: 'space-around',
+                flexWrap: 'wrap',
+              }}
+            >
+              <SmallBox color="orange" />
+              <SmallBox color="red" />
+              <SmallBox color="magenta" />
+              <SmallBox color="blue" />
+              <SmallBox color="red" />
+              <SmallBox color="green" />
+              <SmallBox color="orange" />
+              <SmallBox color="red" />
+              <SmallBox color="yellow" />
+              <SmallBox color="blue" />
+              <SmallBox color="brown" />
+              <View
+                style={{
+                  height: 50,
+                  width: 50,
+                  backgroundColor: 'lightblue',
+                  flexGrow: 1,
+                }}
+              ></View>
+              <View
+                style={{
+                  height: 50,
+                  width: 50,
+                  backgroundColor: 'lightgreen',
+                  flexShrink: 1,
+                }}
+              ></View>
             </View>
           </View>
         </View>
