@@ -1,13 +1,6 @@
 import { useState } from 'react'
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import { sumTwoNumbersArr } from '../utils/mathFunctions'
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native'
+import { sumNumbersArr } from '../utils/mathFunctions'
 
 export default function Events() {
   const handleTextPress = () => {
@@ -18,13 +11,15 @@ export default function Events() {
     return Alert.alert(`You pressed ${text}`)
   }
 
-  const [numbers, setNumbers] = useState([0, 0])
+  const [numbers, setNumbers] = useState([0, 0, 0])
+
+  const [sumResult, setSumResult] = useState(0)
 
   const getSum = () => {
     if (numbers.some((num) => isNaN(num))) {
       return 'Please input valid numbers'
     }
-    return sumTwoNumbersArr(numbers)
+    setSumResult(sumNumbersArr(numbers))
   }
 
   return (
@@ -33,7 +28,9 @@ export default function Events() {
       <View style={styles.textContainer}>
         <Text
           style={styles.textHandler}
-          onPress={() => Alert.alert('Inline pressed')}
+          onPressIn={() => console.log('1. Press in')}
+          onPress={() => Alert.alert('Check the console')}
+          onPressOut={() => console.log('3. Press out')}
         >
           Inline
         </Text>
@@ -58,8 +55,8 @@ export default function Events() {
             value={numbers[0].toString()}
             onChangeText={(text) =>
               !text
-                ? setNumbers([0, numbers[1]])
-                : setNumbers([parseInt(text), numbers[1]])
+                ? setNumbers([0, numbers[1], numbers[2]])
+                : setNumbers([parseInt(text), numbers[1], numbers[2]])
             }
           />
           <Text>+</Text>
@@ -70,12 +67,26 @@ export default function Events() {
             value={numbers[1].toString()}
             onChangeText={(text) =>
               !text
-                ? setNumbers([numbers[0], 0])
-                : setNumbers([numbers[0], parseInt(text)])
+                ? setNumbers([numbers[0], 0, numbers[2]])
+                : setNumbers([numbers[0], parseInt(text), numbers[2]])
+            }
+          />
+          <Text>+</Text>
+          <TextInput
+            style={styles.mathInputs}
+            placeholder="Set number 3"
+            keyboardType="numeric"
+            value={numbers[2].toString()}
+            onChangeText={(text) =>
+              !text
+                ? setNumbers([numbers[0], numbers[1], 0])
+                : setNumbers([numbers[0], numbers[1], parseInt(text)])
             }
           />
         </View>
-        <Text style={styles.textHandler}>Sum is: {getSum()}</Text>
+        <Text style={styles.textHandler} onTextLayout={getSum}>
+          Sum is: {sumResult}
+        </Text>
       </View>
     </View>
   )
@@ -108,9 +119,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   mathInputs: {
+    fontSize: 16,
     borderWidth: 1,
     borderColor: '#cecece',
-    padding: 5,
+    padding: 8,
     margin: 5,
   },
 })
