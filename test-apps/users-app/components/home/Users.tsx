@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   RefreshControl,
+  Pressable,
 } from 'react-native'
 import { IUsers, User } from '../../types/users'
 import { styles } from './UsersStyles'
@@ -39,6 +40,11 @@ const Users = ({ country }: { country: string }) => {
   const [users, setUsers] = useState<[] | User[]>([])
   const [refreshing, setRefreshing] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
+
+  const handleLink = () => {
+    console.log('About link pressed')
+    return
+  }
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true)
@@ -83,12 +89,20 @@ const Users = ({ country }: { country: string }) => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
+        style={styles.list}
         data={users}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         renderItem={({ item }) => <UserCard user={item} />}
         keyExtractor={(item) => item.login.uuid}
+        ListFooterComponent={
+          <View style={styles.listFooter}>
+            <Pressable onPress={handleLink}>
+              <Text style={{ fontSize: 20, color: '#2470fd' }}>About</Text>
+            </Pressable>
+          </View>
+        }
       />
     </SafeAreaView>
   )

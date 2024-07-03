@@ -4,6 +4,11 @@ export const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginTop: 0,
+    marginBottom: 100,
+  },
+  list: {
+    width: '100%',
+    marginBottom: 100,
   },
   card: {
     position: 'relative',
@@ -12,7 +17,7 @@ export const styles = StyleSheet.create({
     borderColor: '#f0f0f0',
     backgroundColor: '#fff',
     padding: 0,
-    marginVertical: 8,
+    marginVertical: 10,
     marginHorizontal: 16,
   },
   cardAvatar: {
@@ -57,5 +62,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     minHeight: 50,
     paddingBottom: 10,
+  },
+  listFooter: {
+    height: 150,
+    paddingTop: 20,
+    alignItems: 'center',
   },
 })
