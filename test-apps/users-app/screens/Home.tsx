@@ -1,24 +1,14 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import Users from '../components/home/Users'
+import { SafeAreaView, Text, View } from 'react-native'
+import Users from '../components/Home/Users'
+import { styles } from './HomeStyles'
 
 export default function Home() {
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        <Text>Users</Text>
-        <View>
-          <Users />
-        </View>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text style={styles.title}>Random Users</Text>
+        <Users />
       </View>
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})

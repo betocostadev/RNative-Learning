@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-} from 'react-native'
+import { SafeAreaView, View, FlatList, Text, Image } from 'react-native'
 import { IUsers, User } from '../../types/users'
+import { styles } from './UsersStyles'
+import Ionicons from '@expo/vector-icons/Ionicons'
 
-type ItemProps = { title: string }
-
-const Item = ({ title }: ItemProps) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
+const UserCard = ({ user }: { user: User }) => (
+  <View style={styles.card}>
+    <View style={styles.cardHeader}>
+      <Image
+        style={[styles.cardAvatar]}
+        source={{ uri: user.picture.medium }}
+      />
+    </View>
+    <View style={styles.cardBody}>
+      <View style={styles.nameContainer}>
+        <Text style={styles.greeting}>Hi, my name is</Text>
+        <Text
+          style={styles.title}
+        >{`${user.name.first} ${user.name.last}`}</Text>
+      </View>
+      <View style={styles.cardInfo}>
+        <Ionicons name="phone-portrait" size={28} color="gray" />
+        <Ionicons name="mail" size={28} color="gray" />
+        <Ionicons name="locate" size={28} color="gray" />
+      </View>
+    </View>
   </View>
 )
 
@@ -22,7 +33,7 @@ const Users = () => {
 
   const loadUsers = async () => {
     try {
-      const response = await fetch('https://randomuser.me/api/?results=2', {
+      const response = await fetch('https://randomuser.me/api/?results=4', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -34,9 +45,6 @@ const Users = () => {
 
       const data: IUsers = await response.json()
       setUsers(data.results)
-
-      console.log('Users: ')
-      console.log(users)
     } catch (error) {
       console.error(error)
     }
@@ -50,27 +58,11 @@ const Users = () => {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={users}
-        renderItem={({ item }) => <Item title={item.name.first} />}
+        renderItem={({ item }) => <UserCard user={item} />}
         keyExtractor={(item) => item.id.value}
       />
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 20,
-  },
-})
 
 export default Users
