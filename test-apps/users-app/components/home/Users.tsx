@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, FlatList, Text, Image } from 'react-native'
+import {
+  SafeAreaView,
+  View,
+  FlatList,
+  Text,
+  Image,
+  RefreshControl,
+} from 'react-native'
 import { IUsers, User } from '../../types/users'
 import { styles } from './UsersStyles'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -28,12 +35,28 @@ const UserCard = ({ user }: { user: User }) => (
   </View>
 )
 
-const Users = () => {
+const Users = ({ country }: { country: string }) => {
   const [users, setUsers] = useState<[] | User[]>([])
+  const [refreshing, setRefreshing] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true)
+    setTimeout(() => {
+      setRefreshing(false)
+    }, 750)
+  }, [])
 
   const loadUsers = async () => {
+    if (isLoading) return
+
+    // Add this loading state to avoid the problem to fetch users multiple times
+    // due to setTimout in onRefresh
+    setIsLoading(true)
+    const baseUrl = 'https://randomuser.me/api/?results=10'
+    const url = country === 'All' ? baseUrl : `${baseUrl}&nat=${country}`
     try {
-      const response = await fetch('https://randomuser.me/api/?results=4', {
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -45,6 +68,9 @@ const Users = () => {
 
       const data: IUsers = await response.json()
       setUsers(data.results)
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 1000)
     } catch (error) {
       console.error(error)
     }
@@ -52,14 +78,17 @@ const Users = () => {
 
   useEffect(() => {
     loadUsers()
-  }, [])
+  }, [country, refreshing])
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={users}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         renderItem={({ item }) => <UserCard user={item} />}
-        keyExtractor={(item) => item.id.value}
+        keyExtractor={(item) => item.login.uuid}
       />
     </SafeAreaView>
   )
