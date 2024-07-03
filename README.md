@@ -7,6 +7,7 @@ Learning projects using React Native with Expo CLI
 ### Expo SDK > 50
 
 - **bat-pass-gen**: RN simple App to generate passwords based on [this project](https://github.com/felipeAguiarCode/react-native-bat-pass-generator)
+- **bat-signal**: Very simple App using some events and a form
 - **navigator:** React Native application mainly focused on Routing using **react navigation** with Stack, Tab, and Drawer Navigation.
 - **navigator-expo**: App focused on Routing, but unlike the **navigator** app above, this one uses Expo routing.
 - **comp-overview**: React Native Basics overview including: Components, Flexbox, and Events.
