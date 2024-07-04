@@ -66,7 +66,7 @@ export default function Home() {
             </Pressable>
           </View>
         </View>
-        <Users country={selectedCountry} />
+        <Users />
       </View>
     </SafeAreaView>
   )
