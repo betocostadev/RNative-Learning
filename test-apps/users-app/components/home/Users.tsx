@@ -11,6 +11,7 @@ import {
 import { IUsers, User } from '../../types/users'
 import { styles } from './UsersStyles'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { useCountry } from '../../hooks/useCountry'
 
 const UserCard = ({ user }: { user: User }) => (
   <View style={styles.card}>
@@ -36,10 +37,12 @@ const UserCard = ({ user }: { user: User }) => (
   </View>
 )
 
-const Users = ({ country }: { country: string }) => {
+const Users = () => {
   const [users, setUsers] = useState<[] | User[]>([])
   const [refreshing, setRefreshing] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
+
+  const { selectedCountry } = useCountry()
 
   const handleLink = () => {
     console.log('About link pressed')
@@ -60,7 +63,8 @@ const Users = ({ country }: { country: string }) => {
     // due to setTimout in onRefresh
     setIsLoading(true)
     const baseUrl = 'https://randomuser.me/api/?results=10'
-    const url = country === 'All' ? baseUrl : `${baseUrl}&nat=${country}`
+    const url =
+      selectedCountry === 'All' ? baseUrl : `${baseUrl}&nat=${selectedCountry}`
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -84,7 +88,7 @@ const Users = ({ country }: { country: string }) => {
 
   useEffect(() => {
     loadUsers()
-  }, [country, refreshing])
+  }, [selectedCountry, refreshing])
 
   return (
     <SafeAreaView style={styles.container}>

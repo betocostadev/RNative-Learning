@@ -1,10 +1,10 @@
 import { Pressable, SafeAreaView, Text, View } from 'react-native'
 import Users from '../components/Home/Users'
 import { styles } from './HomeStyles'
-import { useState } from 'react'
+import { useCountry } from '../hooks/useCountry'
 
 export default function Home() {
-  const [selectedCountry, setSelectedCountry] = useState('All')
+  const { selectedCountry, setSelectedCountry } = useCountry()
 
   const handleCountrySelect = (country: string) => {
     if (country === selectedCountry) {
