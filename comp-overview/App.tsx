@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from './screens/Home'
 import Flex from './screens/Flex'
 import Events from './screens/Events'
+import Hooks from './screens/Hooks'
 
 const Stack = createNativeStackNavigator()
 
@@ -24,6 +25,11 @@ export default function App() {
           name="Events"
           component={Events}
           options={{ title: 'Events' }}
+        />
+        <Stack.Screen
+          name="Hooks"
+          component={Hooks}
+          options={{ title: 'Hooks' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -29,7 +29,7 @@ export default function Flex() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        <View style={styles.container}>
+        <View style={styles.container} accessibilityLabel="article">
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.title}>Flexbox container and children</Text>
           </View>

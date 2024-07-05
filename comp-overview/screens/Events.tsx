@@ -23,7 +23,7 @@ export default function Events() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessibilityLabel="article">
       <Text style={styles.title}>Handling Events</Text>
       <View style={styles.textContainer}>
         <Text
