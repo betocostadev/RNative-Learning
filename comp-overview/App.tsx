@@ -4,6 +4,7 @@ import Home from './screens/Home'
 import Flex from './screens/Flex'
 import Events from './screens/Events'
 import Hooks from './screens/Hooks'
+import Tasks from './screens/Tasks'
 
 const Stack = createNativeStackNavigator()
 
@@ -30,6 +31,11 @@ export default function App() {
           name="Hooks"
           component={Hooks}
           options={{ title: 'Hooks' }}
+        />
+        <Stack.Screen
+          name="Tasks"
+          component={Tasks}
+          options={{ title: 'Tasks' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

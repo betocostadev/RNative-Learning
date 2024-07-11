@@ -131,6 +131,10 @@ export default function Home() {
               title="Hooks"
               onPress={() => navigation.navigate('Hooks' as never)}
             />
+            <Button
+              title="Tasks"
+              onPress={() => navigation.navigate('Tasks' as never)}
+            />
           </View>
           <StatusBar style="auto" />
         </View>
