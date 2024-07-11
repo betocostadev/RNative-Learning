@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from 'react'
+import { useReducer, useState } from 'react'
 import {
   Button,
   FlatList,
@@ -91,8 +91,6 @@ export default function Tasks() {
       </View>
     )
   }
-
-  useEffect(() => {}, [state.tasks])
 
   return (
     <View style={styles.container}>
