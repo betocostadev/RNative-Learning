@@ -1,10 +1,19 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 
-export default function HomeScreen() {
+import { NavigationProp } from '@react-navigation/native'
+
+export default function HomeScreen({
+  navigation,
+}: {
+  navigation: NavigationProp<any>
+}) {
+  const navToGallery = () => navigation.navigate('Gallery')
+
   return (
     <View style={styles.container}>
       <Text>Home</Text>
+      <Button title="Go to gallery" color="#fff1f1" onPress={navToGallery} />
       <StatusBar style="auto" />
     </View>
   )
