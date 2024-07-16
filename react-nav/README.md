@@ -12,4 +12,6 @@ Navigation types included:
 - Bottom Tabs
 - Drawer (to be completed)
 
-Use it as a learning material
+Use it as a learning material.
+
+The navigations aren't mixed. You need to open routes/index.tsx and select the one you want to use.

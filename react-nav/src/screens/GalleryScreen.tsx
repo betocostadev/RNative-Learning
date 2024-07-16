@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 export default function GalleryScreen() {
   return (
     <View style={styles.container}>
-      <Text>Gallery</Text>
+      <Text style={styles.title}>Gallery</Text>
       <StatusBar style="auto" />
     </View>
   )
@@ -13,6 +13,12 @@ export default function GalleryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3d2fff',
+    backgroundColor: '#bcb9ff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    margin: 8,
   },
 })
