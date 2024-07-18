@@ -1,15 +1,8 @@
 import { NavigationProp } from '@react-navigation/native'
-import {
-  Button,
-  Image,
-  Text,
-  Touchable,
-  TouchableHighlight,
-  View,
-} from 'react-native'
-import profile from '../../assets/profile.jpg'
+import { Alert, Button, Image, Linking, Text, View } from 'react-native'
 import { styles } from './HomeScreenStyles'
 import LinkButton from '../components/Home/LinkButton'
+import ProfilePicture from '../components/Shared/ProfilePicture'
 
 export default function HomeScreen({
   navigation,
@@ -18,16 +11,40 @@ export default function HomeScreen({
 }) {
   const navToSkills = () => navigation.navigate('Skills')
 
-  const placeholder = () => alert('Pressed!')
+  const openLink = async (url: string) => {
+    const supported = await Linking.canOpenURL(url)
+
+    if (supported) {
+      await Linking.openURL(url)
+    } else {
+      Alert.alert(`Link is not supported: ${url}`)
+    }
+  }
 
   return (
     <View style={styles.container}>
-      <Image source={profile} style={styles.profileImage} />
-      <View>
-        <LinkButton title="LinkedIn" fn={placeholder} />
-        <LinkButton title="Github" fn={placeholder} />
+      <ProfilePicture />
+      <Text style={styles.title}>Roberto Costa</Text>
+      <View style={{ width: '70%' }}>
+        <LinkButton
+          title="LinkedIn"
+          icon="linkedin-square"
+          background="#3e42ff"
+          fn={() => openLink('https://www.linkedin.com/in/robertomcosta/')}
+        />
+        <LinkButton
+          title="Github"
+          icon="github"
+          background="#2b2b2b"
+          fn={() => openLink('https://github.com/betocostadev')}
+        />
+        <LinkButton
+          title="Email"
+          icon="mail"
+          background="#ff2525"
+          fn={() => openLink('mailto://betocosta@gmail.com')}
+        />
       </View>
-      <Text>Home Screen</Text>
       <Button title="Check my Skills" onPress={navToSkills} />
     </View>
   )
