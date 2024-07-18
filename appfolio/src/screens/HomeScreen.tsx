@@ -1,5 +1,5 @@
 import { NavigationProp } from '@react-navigation/native'
-import { Alert, Button, Image, Linking, Text, View } from 'react-native'
+import { Alert, Button, Linking, Text, View } from 'react-native'
 import { styles } from './HomeScreenStyles'
 import LinkButton from '../components/Home/LinkButton'
 import ProfilePicture from '../components/Shared/ProfilePicture'
