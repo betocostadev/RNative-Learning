@@ -42,7 +42,7 @@ export default function HomeScreen({
           title="Email"
           icon="mail"
           background="#ff2525"
-          fn={() => openLink('mailto://betocosta@gmail.com')}
+          fn={() => openLink('mailto://notreal@gmail.com')}
         />
       </View>
       <Button title="Check my Skills" onPress={navToSkills} />

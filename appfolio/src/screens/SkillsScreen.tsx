@@ -1,9 +1,12 @@
 import { Text, View } from 'react-native'
+import ProfilePicture from '../components/Shared/ProfilePicture'
+import { styles } from './SkillScreenStyles'
 
 export default function SkillsScreen() {
   return (
-    <View>
-      <Text>Skills Screen</Text>
+    <View style={styles.container}>
+      <ProfilePicture />
+      <Text style={styles.title}>My Skills</Text>
     </View>
   )
 }
