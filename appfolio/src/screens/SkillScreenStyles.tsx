@@ -11,4 +11,8 @@ export const styles = StyleSheet.create({
     letterSpacing: 1,
     marginBottom: 12,
   },
+  skillTreeContainer: {
+    width: '80%',
+    margin: 4,
+  },
 })
