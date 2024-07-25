@@ -13,6 +13,7 @@ Learning projects using React Native with Expo CLI
 - **navigator-expo**: App focused on Routing, but unlike the **navigator** app above, this one uses Expo routing.
 - **comp-overview**: React Native Basics overview including: Components, Flexbox, Events, and React most used Hooks like useEffect, useState, and useReducer.
 - **appfolio**: Course project to create a React Native Application with some simple screens.
+- **hookinator**: Course project focused on React Hooks and it's application in mobile Apps.
 
 #### Test apps
 
