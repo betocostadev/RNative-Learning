@@ -1,9 +1,28 @@
-import { Text, View } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
+import { RouteProp } from '@react-navigation/native'
+import { RootStackParamlist } from '../../routes/stack.routes'
 
-export default function UserScreen() {
+type UserScreenProps = {
+  route: RouteProp<RootStackParamlist, 'User'>
+}
+
+export default function UserScreen({ route }: UserScreenProps) {
+  const { username } = route?.params
+
   return (
-    <View>
-      <Text>User Screen</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>{`Welcome, ${username}! `}</Text>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+    marginVertical: 10,
+    alignSelf: 'center',
+  },
+})

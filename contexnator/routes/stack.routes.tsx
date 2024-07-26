@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import HomeScreen from '../src/screens/HomeScreen'
+import UserScreen from '../src/screens/UserScreen'
 
 export type RootStackParamlist = {
   Home: undefined
@@ -17,7 +18,7 @@ export function StackRoutes() {
       />
       <Screen
         name="User"
-        component={HomeScreen}
+        component={UserScreen}
         options={{ title: 'User', headerTintColor: '#1a81ff' }}
       />
     </Navigator>
