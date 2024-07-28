@@ -12,32 +12,53 @@ import { IUsers, User } from '../../types/users'
 import { styles } from './UsersStyles'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useCountry } from '../../hooks/useCountry'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const UserCard = ({ user }: { user: User }) => (
-  <View style={styles.card}>
-    <View style={styles.cardHeader}>
-      <Image
-        style={[styles.cardAvatar]}
-        source={{ uri: user.picture.medium }}
-      />
-    </View>
-    <View style={styles.cardBody}>
-      <View style={styles.nameContainer}>
-        <Text style={styles.greeting}>Hi, my name is</Text>
-        <Text
-          style={styles.title}
-        >{`${user.name.first} ${user.name.last}`}</Text>
-      </View>
-      <View style={styles.cardInfo}>
-        <Ionicons name="phone-portrait" size={28} color="gray" />
-        <Ionicons name="mail" size={28} color="gray" />
-        <Ionicons name="locate" size={28} color="gray" />
-      </View>
-    </View>
-  </View>
-)
+type UsersProps = {
+  goToUser: (user: User) => void
+}
 
-const Users = () => {
+const UserCard = ({
+  user,
+  goToUser,
+}: {
+  user: User
+  goToUser: (user: User) => void
+}) => {
+  const handleNavigation = () => {
+    console.log('Clicked to navigate')
+    console.log(user)
+    goToUser(user)
+    return
+  }
+  return (
+    <View style={styles.card}>
+      <TouchableOpacity onPress={handleNavigation}>
+        <View style={styles.cardHeader}>
+          <Image
+            style={[styles.cardAvatar]}
+            source={{ uri: user.picture.medium }}
+          />
+        </View>
+        <View style={styles.cardBody}>
+          <View style={styles.nameContainer}>
+            <Text style={styles.greeting}>Hi, my name is</Text>
+            <Text
+              style={styles.title}
+            >{`${user.name.first} ${user.name.last}`}</Text>
+          </View>
+          <View style={styles.cardInfo}>
+            <Ionicons name="phone-portrait" size={28} color="gray" />
+            <Ionicons name="mail" size={28} color="gray" />
+            <Ionicons name="locate" size={28} color="gray" />
+          </View>
+        </View>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+const Users = ({ goToUser }: UsersProps) => {
   const [users, setUsers] = useState<[] | User[]>([])
   const [refreshing, setRefreshing] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
@@ -98,7 +119,7 @@ const Users = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        renderItem={({ item }) => <UserCard user={item} />}
+        renderItem={({ item }) => <UserCard user={item} goToUser={goToUser} />}
         keyExtractor={(item) => item.login.uuid}
         ListFooterComponent={
           <View style={styles.listFooter}>

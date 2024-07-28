@@ -2,8 +2,15 @@ import { Pressable, SafeAreaView, Text, View } from 'react-native'
 import Users from '../components/Home/Users'
 import { styles } from './HomeStyles'
 import { useCountry } from '../hooks/useCountry'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamlist } from '../routes/stack.routes'
+import { User } from '../types/users'
 
-export default function Home() {
+type HomeScreenProps = {
+  navigation: StackNavigationProp<RootStackParamlist, 'Home'>
+}
+
+export default function Home({ navigation }: HomeScreenProps) {
   const { selectedCountry, setSelectedCountry } = useCountry()
 
   const handleCountrySelect = (country: string) => {
@@ -19,6 +26,10 @@ export default function Home() {
       return [styles.countryOption, styles.selectedOption]
     }
     return styles.countryOption
+  }
+
+  const goToUserScreen = (user: User) => {
+    navigation.navigate('User', user)
   }
 
   return (
@@ -66,7 +77,7 @@ export default function Home() {
             </Pressable>
           </View>
         </View>
-        <Users />
+        <Users goToUser={goToUserScreen} />
       </View>
     </SafeAreaView>
   )

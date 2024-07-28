@@ -1,24 +1,14 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, View } from 'react-native'
-import Home from './screens/Home'
 import { CountryProvider } from './providers/CountryProvider'
+
+import './gesture-handler'
+import Routes from './routes'
 
 export default function App() {
   return (
     <CountryProvider>
-      <View style={styles.container}>
-        <Home />
-        <StatusBar style="auto" />
-      </View>
+      <Routes />
+      <StatusBar style="auto" />
     </CountryProvider>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
