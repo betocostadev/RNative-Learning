@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   SafeAreaView,
   View,
@@ -37,8 +37,11 @@ const UserCard = ({
 
   const setUser = () => {
     setSelectedUser(user)
-    handleNavigation()
   }
+
+  useEffect(() => {
+    handleNavigation()
+  }, [selectedUser, setSelectedUser])
   return (
     <View style={styles.card}>
       <TouchableOpacity onPress={setUser}>
