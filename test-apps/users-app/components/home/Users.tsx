@@ -13,6 +13,7 @@ import { styles } from './UsersStyles'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useCountry } from '../../hooks/useCountry'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useUser } from '../../hooks/useUser'
 
 type UsersProps = {
   goToUser: (user: User) => void
@@ -25,15 +26,22 @@ const UserCard = ({
   user: User
   goToUser: (user: User) => void
 }) => {
+  const { selectedUser, setSelectedUser } = useUser()
+
   const handleNavigation = () => {
-    console.log('Clicked to navigate')
-    console.log(user)
-    goToUser(user)
+    if (selectedUser) {
+      goToUser(user)
+    }
     return
+  }
+
+  const setUser = () => {
+    setSelectedUser(user)
+    handleNavigation()
   }
   return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={handleNavigation}>
+      <TouchableOpacity onPress={setUser}>
         <View style={styles.cardHeader}>
           <Image
             style={[styles.cardAvatar]}
