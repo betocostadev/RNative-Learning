@@ -6,6 +6,7 @@ Learning projects using React Native with Expo CLI
 
 ### Expo SDK > 50
 
+- **lambo-fetch**: RN simple App to consume the Lamborghini Api.
 - **bat-pass-gen**: RN simple App to generate passwords based on [this project](https://github.com/felipeAguiarCode/react-native-bat-pass-generator).
 - **bat-signal**: Very simple App using some events and a form.
 - **react-nav**: Application focused on exploring different techniques for routing. Created using blank TypeScript to add every routing from scratch. Using React Navigation for navigation.
@@ -16,7 +17,7 @@ Learning projects using React Native with Expo CLI
 - **hookinator**: Course project focused on React Hooks and it's application in mobile Apps, simple Screen using useState, useEffect, useRef, and useReducer.
 - **contexnator**: Course project focused on React Context API and it's application in mobile Apps.
 
-#### Test apps
+#### Test apps - Expo SDK > 50
 
 The test-apps folder contains some simple Apps used to test some concepts, and libraries
 
