@@ -1,10 +1,5 @@
-export interface ICarResults {
-  cars: CarType[]
-}
+import { CarModel } from '../components/CardView/props'
 
-export type CarType = {
-  id: number
-  carName: 'string'
-  releaseYear: number
-  price: 'string'
+export interface ICarResults {
+  cars: CarModel[]
 }
