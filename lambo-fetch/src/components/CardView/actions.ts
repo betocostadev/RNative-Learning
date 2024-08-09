@@ -1,25 +1,50 @@
 import { fetchCars } from '../../api/cars'
-
-let carId = Math.floor(Math.random() * (11 - 1) + 1)
+import { CarModel } from './props'
 
 // Get API data
-export const loadCarData = async (num = carId) => {
-  const car = await fetchCars(num)
-  return car
+export const loadCarData = async (
+  id: number,
+  setCarData: React.Dispatch<React.SetStateAction<CarModel | null>>
+) => {
+  try {
+    const response = await fetchCars(id)
+    if (response) {
+      setCarData(response)
+    }
+  } catch (error) {
+    console.log(error)
+    setCarData(null)
+  }
 }
 
 // Get previous car from the API
-export const handlePreviousItem = async () => {
-  let num = carId === 1 ? 10 : carId - 1
-  carId = num
-  const data = await fetchCars(carId)
-  return data
+export const handlePreviousItem = async (
+  id: number,
+  setCarData: React.Dispatch<React.SetStateAction<CarModel | null>>
+) => {
+  try {
+    const response = await fetchCars(id)
+    if (response) {
+      setCarData(response)
+    }
+  } catch (error) {
+    console.log(error)
+    setCarData(null)
+  }
 }
 
 // Get next car from the API
-export const handleNextItem = async () => {
-  let num = carId === 10 ? 1 : carId + 1
-  carId = num
-  const data = await fetchCars(carId)
-  return data
+export const handleNextItem = async (
+  id: number,
+  setCarData: React.Dispatch<React.SetStateAction<CarModel | null>>
+) => {
+  try {
+    const response = await fetchCars(id)
+    if (response) {
+      setCarData(response)
+    }
+  } catch (error) {
+    console.log(error)
+    setCarData(null)
+  }
 }

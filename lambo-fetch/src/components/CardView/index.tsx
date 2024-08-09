@@ -10,19 +10,19 @@ import { handleNextItem, handlePreviousItem, loadCarData } from './actions'
 import { CarModel } from './props'
 
 export default function CardView() {
-  const [carData, setCarData] = useState<CarModel | undefined>(undefined)
+  const [carData, setCarData] = useState<CarModel | null>(null)
 
   const nextCar = async () => {
-    const car = await handleNextItem()
-    if (car) {
-      setCarData(car)
+    if (carData) {
+      const num = carData.id === 10 ? 1 : carData.id + 1
+      await handleNextItem(num, setCarData)
     }
   }
 
   const previousCar = async () => {
-    const car = await handlePreviousItem()
-    if (car) {
-      setCarData(car)
+    if (carData) {
+      const num = carData.id === 1 ? 10 : carData.id - 1
+      await handlePreviousItem(num, setCarData)
     }
   }
 
@@ -73,13 +73,9 @@ export default function CardView() {
   )
 
   useEffect(() => {
-    const getCarData = async () => {
-      const data = await loadCarData()
-      if (data) {
-        setCarData(data)
-      }
-    }
-    getCarData()
+    ;(async () => {
+      await loadCarData(1, setCarData)
+    })()
   }, [])
 
   return (
