@@ -20,4 +20,23 @@ export const styles = StyleSheet.create({
     width: '65%',
     resizeMode: 'contain',
   },
+  carBrand: {
+    color: '#fff',
+    fontWeight: '400',
+    fontSize: 18,
+    fontStyle: 'italic',
+  },
+  carModel: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  carImage: {
+    flex: 1,
+    marginBottom: 10,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
 })
