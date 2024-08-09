@@ -1,8 +1,10 @@
-import { Image, Text, View } from 'react-native'
+import { Button, Image, Text, TouchableOpacity, View } from 'react-native'
 import { styles } from './style'
 import Logo from '../../../assets/logo.png'
 import Divider from '../Divider'
 import { CAR_ASSETS_BASE_URL } from '../../constants/car'
+import BuyButton from '../BuyButton'
+import { AntDesign } from '@expo/vector-icons'
 
 export default function CardView() {
   const renderLogoBox = () => (
@@ -27,6 +29,34 @@ export default function CardView() {
     />
   )
 
+  const renderPriceControls = () => (
+    <View style={styles.priceLabelContainer}>
+      <TouchableOpacity
+        style={styles.smallButton}
+        onPress={() => console.log('Previous')}
+      >
+        <AntDesign
+          name="left"
+          size={24}
+          color="white"
+          style={styles.buttonIcon}
+        />
+      </TouchableOpacity>
+      <Text style={styles.priceLabel}>Value</Text>
+      <TouchableOpacity
+        style={styles.smallButton}
+        onPress={() => console.log('Next')}
+      >
+        <AntDesign
+          name="right"
+          size={24}
+          color="white"
+          style={styles.buttonIcon}
+        />
+      </TouchableOpacity>
+    </View>
+  )
+
   return (
     <View style={styles.imageContainer}>
       {renderLogoBox()}
@@ -34,6 +64,8 @@ export default function CardView() {
       {renderCarDetails()}
       {renderCarImage()}
       <Divider />
+      <BuyButton />
+      {renderPriceControls()}
     </View>
   )
 }
