@@ -1,4 +1,4 @@
-import { Button, Image, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { styles } from './style'
 import Logo from '../../../assets/logo.png'
 import Divider from '../Divider'
@@ -16,17 +16,13 @@ export default function CardView() {
 
   const nextCar = async () => {
     if (carData) {
-      setLoading(true)
-      await handleNextItem({ id: carData.id, setCarData })
-      setLoading(false)
+      await handleNextItem({ id: carData.id, setCarData, setLoading })
     }
   }
 
   const previousCar = async () => {
     if (carData) {
-      setLoading(true)
-      await handlePreviousItem({ id: carData.id, setCarData })
-      setLoading(false)
+      await handlePreviousItem({ id: carData.id, setCarData, setLoading })
     }
   }
 
@@ -79,7 +75,7 @@ export default function CardView() {
   useEffect(() => {
     ;(async () => {
       setLoading(true)
-      await loadCarData({ id: 1, setCarData })
+      await loadCarData({ id: 1, setCarData, setLoading })
       setLoading(false)
     })()
   }, [])
