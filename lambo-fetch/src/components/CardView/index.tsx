@@ -8,21 +8,25 @@ import { AntDesign } from '@expo/vector-icons'
 import { useEffect, useState } from 'react'
 import { handleNextItem, handlePreviousItem, loadCarData } from './actions'
 import { CarModel } from './props'
+import Spinner from '../Spinner'
 
 export default function CardView() {
   const [carData, setCarData] = useState<CarModel | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const nextCar = async () => {
     if (carData) {
-      const num = carData.id === 10 ? 1 : carData.id + 1
-      await handleNextItem(num, setCarData)
+      setLoading(true)
+      await handleNextItem({ id: carData.id, setCarData })
+      setLoading(false)
     }
   }
 
   const previousCar = async () => {
     if (carData) {
-      const num = carData.id === 1 ? 10 : carData.id - 1
-      await handlePreviousItem(num, setCarData)
+      setLoading(true)
+      await handlePreviousItem({ id: carData.id, setCarData })
+      setLoading(false)
     }
   }
 
@@ -74,9 +78,15 @@ export default function CardView() {
 
   useEffect(() => {
     ;(async () => {
-      await loadCarData(1, setCarData)
+      setLoading(true)
+      await loadCarData({ id: 1, setCarData })
+      setLoading(false)
     })()
   }, [])
+
+  if (loading) {
+    return <Spinner />
+  }
 
   return (
     <View style={styles.imageContainer}>
