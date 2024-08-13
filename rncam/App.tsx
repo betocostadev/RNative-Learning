@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View } from 'react-native'
-import CameraCon from './src/components/CameraCon'
+import CameraContainer from './src/components/CameraContainer'
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <CameraCon />
+      <CameraContainer />
       <StatusBar style="auto" />
     </View>
   )

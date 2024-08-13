@@ -1,14 +1,20 @@
-import { CameraView, CameraType, useCameraPermissions } from 'expo-camera'
+import {
+  CameraView,
+  CameraType,
+  useCameraPermissions,
+  FlashMode,
+} from 'expo-camera'
 import { useState } from 'react'
 import { Button, Text, TouchableOpacity, View } from 'react-native'
 import { styles } from './styles'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
-export default function CameraCon() {
+export default function CameraContainer() {
   const [facing, setFacing] = useState<CameraType>('back')
   const [permission, requestPermission] = useCameraPermissions()
   const [isCameraActive, setIsCameraActive] = useState<boolean>(false)
   const [zoom, setZoom] = useState(0)
+  const [flash, setFlash] = useState<FlashMode>('auto')
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -49,9 +55,28 @@ export default function CameraCon() {
     }
   }
 
+  function handleFlashControl() {
+    switch (flash) {
+      case 'auto':
+        setFlash('on')
+        break
+      case 'on':
+        setFlash('off')
+        break
+      default:
+        setFlash('auto')
+        break
+    }
+  }
+
   const CameraScreen = () => {
     return isCameraActive ? (
-      <CameraView style={styles.camera} facing={facing} zoom={zoom}>
+      <CameraView
+        style={styles.camera}
+        facing={facing}
+        zoom={zoom}
+        flash={flash}
+      >
         <View style={styles.zoomContainer}>
           <Text style={styles.zoomText}>Zoom level</Text>
           <TouchableOpacity
@@ -93,6 +118,19 @@ export default function CameraCon() {
         <TouchableOpacity style={styles.button} onPress={stopCamera}>
           <MaterialCommunityIcons
             name="camera-off-outline"
+            size={32}
+            color="white"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleFlashControl}>
+          <MaterialCommunityIcons
+            name={
+              flash === 'auto'
+                ? 'flash-auto'
+                : flash === 'off'
+                ? 'flash-off'
+                : 'flash'
+            }
             size={32}
             color="white"
           />
