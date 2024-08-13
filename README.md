@@ -6,7 +6,8 @@ Learning projects using React Native with Expo CLI
 
 ### Expo SDK > 50
 
-- **lambo-fetch**: RN simple App to consume the Lamborghini Api.
+- **rncam**: React Native App focused on exploring the mobile Camera usage.
+- **lambo-fetch**: RN simple App to consume the Fake Lamborghini Api. Focused on creating an application using axios and using a clean architecture with MVVM.
 - **bat-pass-gen**: RN simple App to generate passwords based on [this project](https://github.com/felipeAguiarCode/react-native-bat-pass-generator).
 - **bat-signal**: Very simple App using some events and a form.
 - **react-nav**: Application focused on exploring different techniques for routing. Created using blank TypeScript to add every routing from scratch. Using React Navigation for navigation.
