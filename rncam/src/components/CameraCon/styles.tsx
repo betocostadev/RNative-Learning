@@ -41,4 +41,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
+  noCameraSection: {
+    alignItems: 'center',
+  },
+  noCameraText: { fontSize: 20, fontWeight: 'bold' },
 })
