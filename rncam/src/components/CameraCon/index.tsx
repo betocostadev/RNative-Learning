@@ -8,6 +8,7 @@ export default function CameraCon() {
   const [facing, setFacing] = useState<CameraType>('back')
   const [permission, requestPermission] = useCameraPermissions()
   const [isCameraActive, setIsCameraActive] = useState<boolean>(false)
+  const [zoom, setZoom] = useState(0)
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -35,12 +36,39 @@ export default function CameraCon() {
   }
 
   function startCamera() {
-    setIsCameraActive(true)
+    if (permission?.granted) {
+      setIsCameraActive(true)
+    }
+  }
+
+  function changeZoomLevel(operand: string) {
+    if (operand === '+') {
+      setZoom(0.02)
+    } else {
+      setZoom(0)
+    }
   }
 
   const CameraScreen = () => {
     return isCameraActive ? (
-      <CameraView style={styles.camera} facing={facing}>
+      <CameraView style={styles.camera} facing={facing} zoom={zoom}>
+        <View style={styles.zoomContainer}>
+          <Text style={styles.zoomText}>Zoom level</Text>
+          <TouchableOpacity
+            style={styles.zoomBtns}
+            onPress={() => changeZoomLevel('+')}
+            disabled={zoom >= 0.02}
+          >
+            <MaterialCommunityIcons name="plus" size={28} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.zoomBtns}
+            onPress={() => changeZoomLevel('-')}
+            disabled={zoom <= 0}
+          >
+            <MaterialCommunityIcons name="minus" size={28} color="white" />
+          </TouchableOpacity>
+        </View>
         <View style={styles.buttonContainer}></View>
       </CameraView>
     ) : (

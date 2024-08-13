@@ -21,15 +21,17 @@ export const styles = StyleSheet.create({
   button: {
     padding: 12,
   },
-  closeButton: {
-    position: 'absolute',
-    top: 48,
-    right: 12,
-  },
   text: {
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
+  },
+  noCameraSection: {
+    alignItems: 'center',
+  },
+  noCameraText: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   bottomMenu: {
     flexDirection: 'row',
@@ -41,8 +43,19 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
-  noCameraSection: {
+  zoomContainer: {
+    position: 'absolute',
+    right: 30,
+    bottom: '15%',
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  noCameraText: { fontSize: 20, fontWeight: 'bold' },
+  zoomText: {
+    fontSize: 14,
+    color: 'white',
+    paddingBottom: 10,
+  },
+  zoomBtns: {
+    paddingVertical: 10,
+  },
 })
