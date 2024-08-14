@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 20,
   },
+  closeBtn: { margin: 10, paddingBottom: 8, alignSelf: 'flex-end' },
   modalImage: {
     width: '100%',
     height: '60%',
@@ -29,6 +30,6 @@ export const styles = StyleSheet.create({
     marginTop: 18,
     alignContent: 'center',
     alignItems: 'stretch',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
 })

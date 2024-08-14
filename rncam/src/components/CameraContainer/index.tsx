@@ -52,7 +52,6 @@ export default function CameraContainer({
         setCapturedPhoto(data.uri)
         setIsModalOpen(true)
       }
-      console.log(data)
     }
   }
 
@@ -146,6 +145,7 @@ export default function CameraContainer({
           isOpen={isModalOpen}
           captureUri={capturedPhoto}
           deletePicture={deletePicture}
+          setIsOpen={setIsModalOpen}
         />
       ) : null}
     </View>
