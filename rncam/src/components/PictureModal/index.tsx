@@ -11,21 +11,19 @@ export default function PictureModal({
   setIsOpen,
 }: ModalPictureProps) {
   const saveImage = async () => {
-    if (captureUri) {
-      const permissionResult = await MediaLibrary.requestPermissionsAsync()
-      if (permissionResult.granted === false) {
-        alert('Permission to access gallery is required!')
-        return
-      }
+    const permissionResult = await MediaLibrary.requestPermissionsAsync()
+    if (permissionResult.granted === false) {
+      alert('Permission to access gallery is required!')
+      return
+    }
 
-      try {
-        const asset = await MediaLibrary.createAssetAsync(captureUri)
-        await MediaLibrary.createAlbumAsync('MyAppPhotos', asset, false)
-        Alert.alert('Photo saved to gallery!')
-        setIsOpen(false)
-      } catch (error) {
-        Alert.alert('Error', 'Failed to save photo to gallery.')
-      }
+    try {
+      const asset = await MediaLibrary.createAssetAsync(captureUri)
+      await MediaLibrary.createAlbumAsync('MyAppPhotos', asset, false)
+      Alert.alert('Photo saved to gallery!')
+      setIsOpen(false)
+    } catch (error) {
+      Alert.alert('Error', 'Failed to save photo to gallery.')
     }
   }
 

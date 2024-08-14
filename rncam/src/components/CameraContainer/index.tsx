@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { Linking, Text, TouchableOpacity, View } from 'react-native'
 import { CameraView, FlashMode } from 'expo-camera'
-import { CameraContainerProps } from '../../types/Camera'
+import { CameraContainerProps, FlashModeTypes } from '../../types/Camera'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { styles } from './styles'
 import PictureModal from '../PictureModal'
@@ -12,7 +12,7 @@ export default function CameraContainer({
   unMountCamera,
 }: CameraContainerProps) {
   const [zoom, setZoom] = useState(0)
-  const [flash, setFlash] = useState<FlashMode>('auto')
+  const [flash, setFlash] = useState<FlashMode>(FlashModeTypes.auto)
   const [isCamReady, setIsCamReady] = useState<boolean>(false)
   const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -33,14 +33,14 @@ export default function CameraContainer({
 
   const handleFlashControl = () => {
     switch (flash) {
-      case 'auto':
-        setFlash('on')
+      case FlashModeTypes.auto:
+        setFlash(FlashModeTypes.on)
         break
-      case 'on':
-        setFlash('off')
+      case FlashModeTypes.on:
+        setFlash(FlashModeTypes.off)
         break
       default:
-        setFlash('auto')
+        setFlash(FlashModeTypes.auto)
         break
     }
   }

@@ -12,3 +12,9 @@ export interface ModalPictureProps {
   deletePicture: () => void
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+export enum FlashModeTypes {
+  auto = 'auto',
+  on = 'on',
+  off = 'off',
+}
