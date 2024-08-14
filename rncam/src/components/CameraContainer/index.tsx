@@ -1,51 +1,17 @@
-import {
-  CameraView,
-  CameraType,
-  useCameraPermissions,
-  FlashMode,
-} from 'expo-camera'
 import { useState } from 'react'
-import { Button, Text, TouchableOpacity, View } from 'react-native'
-import { styles } from './styles'
+import { Text, TouchableOpacity, View } from 'react-native'
+import { CameraView, FlashMode } from 'expo-camera'
+import { CameraContainerProps } from '../../types/Camera'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import { styles } from './styles'
 
-export default function CameraContainer() {
-  const [facing, setFacing] = useState<CameraType>('back')
-  const [permission, requestPermission] = useCameraPermissions()
-  const [isCameraActive, setIsCameraActive] = useState<boolean>(false)
+export default function CameraContainer({
+  type,
+  onFlipCamera,
+  unMountCamera,
+}: CameraContainerProps) {
   const [zoom, setZoom] = useState(0)
   const [flash, setFlash] = useState<FlashMode>('auto')
-
-  if (!permission) {
-    // Camera permissions are still loading.
-    return <View />
-  }
-
-  if (!permission.granted) {
-    // Camera permissions are not granted yet.
-    return (
-      <View style={styles.container}>
-        <Text style={styles.message}>
-          We need your permission to show the camera
-        </Text>
-        <Button onPress={requestPermission} title="Grant Permission" />
-      </View>
-    )
-  }
-
-  function toggleCameraFacing() {
-    setFacing((current) => (current === 'back' ? 'front' : 'back'))
-  }
-
-  function stopCamera() {
-    setIsCameraActive(false)
-  }
-
-  function startCamera() {
-    if (permission?.granted) {
-      setIsCameraActive(true)
-    }
-  }
 
   function changeZoomLevel(operand: string) {
     if (operand === '+') {
@@ -69,14 +35,9 @@ export default function CameraContainer() {
     }
   }
 
-  const CameraScreen = () => {
-    return isCameraActive ? (
-      <CameraView
-        style={styles.camera}
-        facing={facing}
-        zoom={zoom}
-        flash={flash}
-      >
+  const renderCameraScreen = () => {
+    return (
+      <CameraView style={styles.camera} facing={type} zoom={zoom} flash={flash}>
         <View style={styles.zoomContainer}>
           <Text style={styles.zoomText}>Zoom level</Text>
           <TouchableOpacity
@@ -96,26 +57,20 @@ export default function CameraContainer() {
         </View>
         <View style={styles.buttonContainer}></View>
       </CameraView>
-    ) : (
-      <View style={styles.noCameraSection}>
-        <Text style={styles.noCameraText}>
-          Activate your device camera below
-        </Text>
-      </View>
     )
   }
 
-  const BottomMenu = () => {
-    return isCameraActive ? (
+  const renderBottomMenu = () => {
+    return (
       <View style={styles.bottomMenu}>
-        <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+        <TouchableOpacity style={styles.button} onPress={onFlipCamera}>
           <MaterialCommunityIcons
             name="camera-flip-outline"
             size={32}
             color="white"
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={stopCamera}>
+        <TouchableOpacity style={styles.button} onPress={unMountCamera}>
           <MaterialCommunityIcons
             name="camera-off-outline"
             size={32}
@@ -136,19 +91,13 @@ export default function CameraContainer() {
           />
         </TouchableOpacity>
       </View>
-    ) : (
-      <View style={[styles.bottomMenu, { backgroundColor: '#151515ad' }]}>
-        <TouchableOpacity style={styles.button} onPress={startCamera}>
-          <MaterialCommunityIcons name="camera" size={32} color="white" />
-        </TouchableOpacity>
-      </View>
     )
   }
 
   return (
     <View style={styles.container}>
-      {CameraScreen()}
-      {BottomMenu()}
+      {renderCameraScreen()}
+      {renderBottomMenu()}
     </View>
   )
 }

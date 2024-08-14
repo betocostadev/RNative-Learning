@@ -5,10 +5,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  message: {
-    textAlign: 'center',
-    paddingBottom: 10,
-  },
   camera: {
     flex: 1,
   },
@@ -25,13 +21,6 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
-  },
-  noCameraSection: {
-    alignItems: 'center',
-  },
-  noCameraText: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   bottomMenu: {
     flexDirection: 'row',
