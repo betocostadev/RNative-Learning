@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { CameraType, useCameraPermissions } from 'expo-camera'
@@ -24,6 +24,14 @@ export default function App() {
     setIsCameraActive(false)
   }
 
+  useEffect(() => {
+    ;(async () => {
+      if (!permission?.granted) {
+        await requestPermission()
+      }
+    })()
+  }, [])
+
   const renderCameraContainer = () => {
     return isCameraActive ? (
       <CameraContainer
@@ -34,7 +42,11 @@ export default function App() {
     ) : (
       <View style={styles.bottomMenu}>
         <TouchableOpacity onPress={startCamera}>
-          <MaterialCommunityIcons name="camera" size={32} color="white" />
+          <MaterialCommunityIcons
+            name="camera-outline"
+            size={32}
+            color="white"
+          />
         </TouchableOpacity>
       </View>
     )
@@ -42,7 +54,11 @@ export default function App() {
 
   if (!permission) {
     // Camera permissions are still loading.
-    return <View />
+    return (
+      <View style={styles.container}>
+        <Text style={styles.loadingMessage}>Loading device's camera...</Text>
+      </View>
+    )
   }
 
   if (!permission.granted) {
@@ -78,6 +94,11 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'transparent',
   },
+  loadingMessage: {
+    marginTop: 200,
+    height: 200,
+    alignSelf: 'center',
+  },
   bottomMenu: {
     zIndex: 1,
     flexDirection: 'row',
@@ -85,10 +106,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: '#151515ad',
     width: '100%',
-    height: '10%',
+    height: '12.5%',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingBottom: 4,
+    paddingBottom: 20,
   },
   message: {
     textAlign: 'center',

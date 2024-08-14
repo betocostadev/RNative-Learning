@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { CameraView, FlashMode } from 'expo-camera'
 import { CameraContainerProps } from '../../types/Camera'
@@ -12,6 +12,8 @@ export default function CameraContainer({
 }: CameraContainerProps) {
   const [zoom, setZoom] = useState(0)
   const [flash, setFlash] = useState<FlashMode>('auto')
+  const [isCamReady, setIsCamReady] = useState(false)
+  const camRef = useRef<CameraView>(null)
 
   function changeZoomLevel(operand: string) {
     if (operand === '+') {
@@ -35,9 +37,22 @@ export default function CameraContainer({
     }
   }
 
+  async function takePicture() {
+    if (isCamReady) {
+      const result = await camRef.current?.takePictureAsync()
+    }
+  }
+
   const renderCameraScreen = () => {
     return (
-      <CameraView style={styles.camera} facing={type} zoom={zoom} flash={flash}>
+      <CameraView
+        style={styles.camera}
+        facing={type}
+        zoom={zoom}
+        flash={flash}
+        onCameraReady={() => setIsCamReady(true)}
+        ref={camRef}
+      >
         <View style={styles.zoomContainer}>
           <Text style={styles.zoomText}>Zoom level</Text>
           <TouchableOpacity
@@ -63,16 +78,22 @@ export default function CameraContainer({
   const renderBottomMenu = () => {
     return (
       <View style={styles.bottomMenu}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => console.log('Open gallery')}
+        >
+          <MaterialCommunityIcons name="camera-image" size={28} color="white" />
+        </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={onFlipCamera}>
           <MaterialCommunityIcons
             name="camera-flip-outline"
-            size={32}
+            size={28}
             color="white"
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={unMountCamera}>
+        <TouchableOpacity style={styles.button} onPress={takePicture}>
           <MaterialCommunityIcons
-            name="camera-off-outline"
+            name="camera-enhance-outline"
             size={32}
             color="white"
           />
@@ -86,7 +107,14 @@ export default function CameraContainer({
                 ? 'flash-off'
                 : 'flash'
             }
-            size={32}
+            size={28}
+            color="white"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={unMountCamera}>
+          <MaterialCommunityIcons
+            name="camera-off-outline"
+            size={28}
             color="white"
           />
         </TouchableOpacity>

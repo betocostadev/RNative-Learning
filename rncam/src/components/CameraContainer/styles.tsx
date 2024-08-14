@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     margin: 100,
   },
   button: {
-    padding: 12,
+    padding: 8,
   },
   text: {
     fontSize: 24,
@@ -26,11 +26,12 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
-    backgroundColor: '#fcfcfc9e',
+    backgroundColor: '#fcfcfc51',
     width: '100%',
-    height: '10%',
+    height: '12.5%',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    paddingBottom: 20,
   },
   zoomContainer: {
     position: 'absolute',
