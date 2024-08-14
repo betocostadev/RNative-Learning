@@ -1,9 +1,10 @@
 import { useState, useRef } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Image, Modal, Text, TouchableOpacity, View } from 'react-native'
 import { CameraView, FlashMode } from 'expo-camera'
 import { CameraContainerProps } from '../../types/Camera'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { styles } from './styles'
+import PictureModal from '../PictureModal'
 
 export default function CameraContainer({
   type,
@@ -12,7 +13,10 @@ export default function CameraContainer({
 }: CameraContainerProps) {
   const [zoom, setZoom] = useState(0)
   const [flash, setFlash] = useState<FlashMode>('auto')
-  const [isCamReady, setIsCamReady] = useState(false)
+  const [isCamReady, setIsCamReady] = useState<boolean>(false)
+  const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+
   const camRef = useRef<CameraView>(null)
 
   function changeZoomLevel(operand: string) {
@@ -38,9 +42,19 @@ export default function CameraContainer({
   }
 
   async function takePicture() {
-    if (isCamReady) {
-      const result = await camRef.current?.takePictureAsync()
+    if (isCamReady && camRef.current) {
+      const data = await camRef.current.takePictureAsync()
+      if (data) {
+        setCapturedPhoto(data.uri)
+        setIsModalOpen(true)
+      }
+      console.log(data)
     }
+  }
+
+  function deletePicture() {
+    setCapturedPhoto(null)
+    setIsModalOpen(false)
   }
 
   const renderCameraScreen = () => {
@@ -126,6 +140,13 @@ export default function CameraContainer({
     <View style={styles.container}>
       {renderCameraScreen()}
       {renderBottomMenu()}
+      {capturedPhoto && isModalOpen ? (
+        <PictureModal
+          isOpen={isModalOpen}
+          captureUri={capturedPhoto}
+          deletePicture={deletePicture}
+        />
+      ) : null}
     </View>
   )
 }

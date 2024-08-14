@@ -5,3 +5,10 @@ export interface CameraContainerProps {
   onFlipCamera: () => void
   unMountCamera: () => void
 }
+
+export interface ModalPictureProps {
+  isOpen: boolean
+  captureUri: string
+  deletePicture: () => void
+  // setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
