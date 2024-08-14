@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Image, Modal, Text, TouchableOpacity, View } from 'react-native'
+import { Linking, Text, TouchableOpacity, View } from 'react-native'
 import { CameraView, FlashMode } from 'expo-camera'
 import { CameraContainerProps } from '../../types/Camera'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -19,7 +19,11 @@ export default function CameraContainer({
 
   const camRef = useRef<CameraView>(null)
 
-  function changeZoomLevel(operand: string) {
+  const openGallery = () => {
+    Linking.openURL('photos-redirect://')
+  }
+
+  const changeZoomLevel = (operand: string) => {
     if (operand === '+') {
       setZoom(0.02)
     } else {
@@ -27,7 +31,7 @@ export default function CameraContainer({
     }
   }
 
-  function handleFlashControl() {
+  const handleFlashControl = () => {
     switch (flash) {
       case 'auto':
         setFlash('on')
@@ -41,7 +45,7 @@ export default function CameraContainer({
     }
   }
 
-  async function takePicture() {
+  const takePicture = async () => {
     if (isCamReady && camRef.current) {
       const data = await camRef.current.takePictureAsync()
       if (data) {
@@ -52,7 +56,7 @@ export default function CameraContainer({
     }
   }
 
-  function deletePicture() {
+  const deletePicture = () => {
     setCapturedPhoto(null)
     setIsModalOpen(false)
   }
@@ -92,10 +96,7 @@ export default function CameraContainer({
   const renderBottomMenu = () => {
     return (
       <View style={styles.bottomMenu}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => console.log('Open gallery')}
-        >
+        <TouchableOpacity style={styles.button} onPress={openGallery}>
           <MaterialCommunityIcons name="camera-image" size={28} color="white" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={onFlipCamera}>
