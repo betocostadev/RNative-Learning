@@ -10,19 +10,13 @@ export default function App() {
   const [permission, requestPermission] = useCameraPermissions()
   const [isCameraActive, setIsCameraActive] = useState<boolean>(false)
 
-  function toggleCameraFacing() {
+  const toggleCameraFacing = () =>
     setFacing((current) => (current === 'back' ? 'front' : 'back'))
-  }
 
-  function startCamera() {
-    if (permission?.granted) {
-      setIsCameraActive(true)
-    }
-  }
+  const startCamera = () =>
+    permission?.granted ? setIsCameraActive(true) : null
 
-  function stopCamera() {
-    setIsCameraActive(false)
-  }
+  const stopCamera = () => setIsCameraActive(false)
 
   useEffect(() => {
     ;(async () => {

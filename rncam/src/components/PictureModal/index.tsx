@@ -3,6 +3,7 @@ import * as MediaLibrary from 'expo-media-library'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { ModalPictureProps } from '../../types/Camera'
 import { styles } from './styles'
+import { useState } from 'react'
 
 export default function PictureModal({
   isOpen,
@@ -10,16 +11,18 @@ export default function PictureModal({
   deletePicture,
   setIsOpen,
 }: ModalPictureProps) {
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions()
+
   const saveImage = async () => {
-    const permissionResult = await MediaLibrary.requestPermissionsAsync()
-    if (permissionResult.granted === false) {
+    await requestPermission()
+    if (permissionResponse?.status !== 'granted') {
       alert('Permission to access gallery is required!')
       return
     }
 
     try {
       const asset = await MediaLibrary.createAssetAsync(captureUri)
-      await MediaLibrary.createAlbumAsync('MyAppPhotos', asset, false)
+      await MediaLibrary.createAlbumAsync('RnCam', asset, false)
       Alert.alert('Photo saved to gallery!')
       setIsOpen(false)
     } catch (error) {
@@ -39,14 +42,17 @@ export default function PictureModal({
         <Image style={styles.modalImage} source={{ uri: captureUri }} />
         <View style={styles.modalFooter}>
           <View style={styles.modalBtnContainer}>
-            <TouchableOpacity onPress={deletePicture}>
-              <MaterialCommunityIcons name="delete" size={44} color="#ff7171" />
+            <TouchableOpacity
+              style={styles.modalActionBtn}
+              onPress={deletePicture}
+            >
+              <MaterialCommunityIcons name="delete" size={38} color="#af3f3f" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={saveImage}>
+            <TouchableOpacity style={styles.modalActionBtn} onPress={saveImage}>
               <MaterialCommunityIcons
                 name="content-save"
-                size={44}
-                color="#3a912b"
+                size={38}
+                color="#2c741f"
               />
             </TouchableOpacity>
           </View>

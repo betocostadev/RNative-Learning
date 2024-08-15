@@ -41,9 +41,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   zoomText: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'white',
-    paddingBottom: 10,
+    paddingBottom: 12,
   },
   zoomBtns: {
     paddingVertical: 10,

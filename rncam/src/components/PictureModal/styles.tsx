@@ -25,11 +25,19 @@ export const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   modalBtnContainer: {
-    width: '40%',
+    width: '50%',
     flexDirection: 'row',
-    marginTop: 18,
-    alignContent: 'center',
-    alignItems: 'stretch',
+    paddingTop: 22,
     justifyContent: 'space-between',
+  },
+  modalActionBtn: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    backgroundColor: '#a9a9a9d2',
+    borderWidth: 1,
+    borderColor: '#9c9b9bd2',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })

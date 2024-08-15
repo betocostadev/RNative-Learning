@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react'
 import { Linking, Text, TouchableOpacity, View } from 'react-native'
 import { CameraView, FlashMode } from 'expo-camera'
-import { CameraContainerProps, FlashModeTypes } from '../../types/Camera'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { styles } from './styles'
+import { CameraContainerProps, FlashModeTypes } from '../../types/Camera'
 import PictureModal from '../PictureModal'
+import { styles } from './styles'
 
 export default function CameraContainer({
   type,
@@ -19,16 +19,22 @@ export default function CameraContainer({
 
   const camRef = useRef<CameraView>(null)
 
-  const openGallery = () => {
-    Linking.openURL('photos-redirect://')
-  }
+  const openGallery = () => Linking.openURL('photos-redirect://')
 
   const changeZoomLevel = (operand: string) => {
     if (operand === '+') {
-      setZoom(0.02)
+      setZoom((zoom) => zoom + 0.01)
     } else {
-      setZoom(0)
+      setZoom((zoom) => zoom - 0.01)
     }
+  }
+
+  const getFlashIcon = () => {
+    return flash === FlashModeTypes.auto
+      ? 'flash-auto'
+      : flash === FlashModeTypes.off
+      ? 'flash-off'
+      : 'flash'
   }
 
   const handleFlashControl = () => {
@@ -71,7 +77,7 @@ export default function CameraContainer({
         ref={camRef}
       >
         <View style={styles.zoomContainer}>
-          <Text style={styles.zoomText}>Zoom level</Text>
+          <Text style={styles.zoomText}>Zoom</Text>
           <TouchableOpacity
             style={styles.zoomBtns}
             onPress={() => changeZoomLevel('+')}
@@ -114,13 +120,7 @@ export default function CameraContainer({
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleFlashControl}>
           <MaterialCommunityIcons
-            name={
-              flash === 'auto'
-                ? 'flash-auto'
-                : flash === 'off'
-                ? 'flash-off'
-                : 'flash'
-            }
+            name={getFlashIcon()}
             size={28}
             color="white"
           />
