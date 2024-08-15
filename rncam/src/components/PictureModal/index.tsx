@@ -1,9 +1,10 @@
 import { Alert, Image, Modal, TouchableOpacity, View } from 'react-native'
 import * as MediaLibrary from 'expo-media-library'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+
 import { ModalPictureProps } from '../../types/Camera'
 import { styles } from './styles'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function PictureModal({
   isOpen,
@@ -11,6 +12,7 @@ export default function PictureModal({
   deletePicture,
   setIsOpen,
 }: ModalPictureProps) {
+  const [albums, setAlbums] = useState<MediaLibrary.Album[]>([])
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions()
 
   const saveImage = async () => {
@@ -21,14 +23,36 @@ export default function PictureModal({
     }
 
     try {
+      const album = albums.find((a) => a.title === 'RnCam')
       const asset = await MediaLibrary.createAssetAsync(captureUri)
-      await MediaLibrary.createAlbumAsync('RnCam', asset, false)
+
+      if (album) {
+        await MediaLibrary.addAssetsToAlbumAsync(asset, album, false)
+      } else {
+        await MediaLibrary.createAlbumAsync('RnCam', asset, false)
+      }
       Alert.alert('Photo saved to gallery!')
       setIsOpen(false)
     } catch (error) {
       Alert.alert('Error', 'Failed to save photo to gallery.')
     }
   }
+
+  const getAlbums = async () => {
+    if (permissionResponse?.status !== 'granted') {
+      await requestPermission()
+    }
+    const fetchedAlbums = await MediaLibrary.getAlbumsAsync({
+      includeSmartAlbums: true,
+    })
+    setAlbums(fetchedAlbums)
+  }
+
+  useEffect(() => {
+    ;(async () => {
+      await getAlbums()
+    })()
+  }, [])
 
   return (
     <Modal animationType="slide" transparent={false} visible={isOpen}>
@@ -46,13 +70,13 @@ export default function PictureModal({
               style={styles.modalActionBtn}
               onPress={deletePicture}
             >
-              <MaterialCommunityIcons name="delete" size={38} color="#af3f3f" />
+              <MaterialCommunityIcons name="delete" size={36} color="#be4b4b" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.modalActionBtn} onPress={saveImage}>
               <MaterialCommunityIcons
                 name="content-save"
-                size={38}
-                color="#2c741f"
+                size={36}
+                color="#3a8a2c"
               />
             </TouchableOpacity>
           </View>

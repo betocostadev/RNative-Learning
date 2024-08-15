@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { Linking, Text, TouchableOpacity, View } from 'react-native'
 import { CameraView, FlashMode } from 'expo-camera'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+
 import { CameraContainerProps, FlashModeTypes } from '../../types/Camera'
 import PictureModal from '../PictureModal'
 import { styles } from './styles'
