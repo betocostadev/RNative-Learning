@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { Linking, TouchableOpacity, View } from 'react-native'
 import { CameraMode, CameraType, CameraView } from 'expo-camera'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
@@ -20,6 +20,8 @@ export default function CamView({
 
   const toggleCameraFacing = () =>
     setFacing((current) => (current === 'back' ? 'front' : 'back'))
+
+  const openGallery = () => Linking.openURL('photos-redirect://')
 
   return (
     <View style={styles.container}>
@@ -42,6 +44,9 @@ export default function CamView({
             </TouchableOpacity>
             <TouchableOpacity onPress={toggleCameraFacing}>
               <Ionicons name="camera-reverse-outline" size={32} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openGallery}>
+              <Ionicons name="albums-outline" size={32} color="white" />
             </TouchableOpacity>
           </View>
         </View>

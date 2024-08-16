@@ -11,11 +11,12 @@ export const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   menuButtons: {
+    width: '90%',
+    borderColor: 'red',
     maxHeight: '10%',
-    paddingTop: 10,
-    marginBottom: 10,
+    paddingTop: 14,
+    marginBottom: 12,
     flexDirection: 'row',
-    alignItems: 'stretch',
     justifyContent: 'space-evenly',
   },
 })

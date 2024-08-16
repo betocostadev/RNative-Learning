@@ -2,13 +2,11 @@ import { useEffect, useState, useRef } from 'react'
 import { Alert, Button, StyleSheet, Text, View } from 'react-native'
 
 import {
-  CameraType,
   CameraView,
   useCameraPermissions,
   useMicrophonePermissions,
   CameraRecordingOptions,
 } from 'expo-camera'
-import { Video } from 'expo-av'
 import { shareAsync } from 'expo-sharing'
 import * as MediaLibrary from 'expo-media-library'
 
@@ -21,18 +19,19 @@ export default function App() {
   const [permissionResponse, requestMediaPermission] =
     MediaLibrary.usePermissions()
 
+  const [albums, setAlbums] = useState<MediaLibrary.Album[]>([])
+
   const [isRecording, setIsRecording] = useState(false)
   const [video, setVideo] = useState<any>()
 
   const cameraRef = useRef<CameraView>(null)
 
   const recordVideo = async () => {
-    const options: CameraRecordingOptions = { maxDuration: 3 }
+    const options: CameraRecordingOptions = { maxDuration: 15 }
     if (cameraRef.current) {
       setIsRecording(true)
       try {
         const recordedVideo = await cameraRef.current.recordAsync(options)
-        console.log('Recorded video: ', recordedVideo)
         setVideo(recordedVideo)
       } catch (e: any) {
         console.error('Error recording: ', e.message)
@@ -45,26 +44,54 @@ export default function App() {
 
   const stopRecording = () => {
     if (isRecording) {
-      console.log('Stop Recording called')
       setIsRecording(false)
       if (cameraRef.current) {
         cameraRef.current.stopRecording()
-        console.log('Recording stopped')
       }
-      console.log('Video after stopRecording:', video)
     }
   }
 
-  const shareVideo = () => {}
-  const saveVideo = () => {}
+  const shareVideo = () => {
+    shareAsync(video.uri)
+  }
   const deleteVideo = () => {
     setVideo(undefined)
   }
 
-  // Add a useEffect to log the video state whenever it changes
-  useEffect(() => {
-    console.log('Video state changed:', video)
-  }, [video])
+  const getAlbums = async () => {
+    if (permissionResponse?.status !== 'granted') {
+      await requestPermission()
+    }
+    const fetchedAlbums = await MediaLibrary.getAlbumsAsync({
+      includeSmartAlbums: true,
+    })
+    setAlbums(fetchedAlbums)
+  }
+
+  const saveVideo = async () => {
+    await requestPermission()
+    await getAlbums()
+    if (permissionResponse?.status !== 'granted') {
+      alert('Permission to access gallery is required!')
+      return
+    }
+
+    try {
+      const album = albums.find((a) => a.title === 'RnVid')
+      const asset = await MediaLibrary.createAssetAsync(video.uri)
+
+      if (album) {
+        await MediaLibrary.addAssetsToAlbumAsync(asset, album, false)
+      } else {
+        await MediaLibrary.createAlbumAsync('RnVid', asset, false)
+      }
+      Alert.alert('Video saved to gallery!')
+      deleteVideo()
+    } catch (error) {
+      console.log(error)
+      Alert.alert('Error: Failed to save video to gallery.')
+    }
+  }
 
   useEffect(() => {
     ;(async () => {
@@ -74,19 +101,7 @@ export default function App() {
     })()
   }, [])
 
-  if (video) {
-    return (
-      <VideoPlayer
-        video={video}
-        onShare={shareVideo}
-        onSave={saveVideo}
-        onDelete={deleteVideo}
-      />
-    )
-  }
-
   if (!permission?.granted || !status?.granted) {
-    // Permissions are not granted yet.
     return (
       <View style={styles.container}>
         <Text style={styles.message}>
@@ -109,6 +124,17 @@ export default function App() {
           title="Grant Media Library permission"
         />
       </View>
+    )
+  }
+
+  if (video) {
+    return (
+      <VideoPlayer
+        video={video}
+        onShare={shareVideo}
+        onSave={saveVideo}
+        onDelete={deleteVideo}
+      />
     )
   }
 
