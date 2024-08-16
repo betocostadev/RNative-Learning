@@ -6,6 +6,7 @@ Learning projects using React Native with Expo CLI
 
 ### Expo SDK > 50
 
+- **rnvid**: React Native App for recording videos uns the mobile camera.
 - **rncam**: React Native App focused on exploring the mobile Camera usage. Includes access to gallery and saving pictures to gallery (iOS tested only).
 - **lambo-fetch**: RN simple App to consume the Fake Lamborghini Api. Focused on creating an application using axios and using a clean architecture with MVVM.
 - **bat-pass-gen**: RN simple App to generate passwords based on [this project](https://github.com/felipeAguiarCode/react-native-bat-pass-generator).
