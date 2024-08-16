@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Alert, Button, StyleSheet, Text, View } from 'react-native'
 
 import {
   CameraType,
   CameraView,
-  CameraViewRef,
   useCameraPermissions,
   useMicrophonePermissions,
+  CameraRecordingOptions,
 } from 'expo-camera'
 import { Video } from 'expo-av'
 import { shareAsync } from 'expo-sharing'
@@ -22,12 +22,56 @@ export default function App() {
     MediaLibrary.usePermissions()
 
   const [isRecording, setIsRecording] = useState(false)
+  const [video, setVideo] = useState<any>()
 
-  const cameraRef = useRef<CameraViewRef>(null)
+  const cameraRef = useRef<CameraView>(null)
 
-  const recordVideo = () => null
+  const recordVideo = async () => {
+    const options: CameraRecordingOptions = { maxDuration: 3 }
+    if (cameraRef.current) {
+      console.log('Recording started')
+      setIsRecording(true)
+      try {
+        const recordedVideo = await cameraRef.current.recordAsync(options)
+        console.log('Recorded video: ', recordedVideo)
+        setVideo(recordedVideo)
+      } catch (e: any) {
+        console.error('Error recording: ', e.message)
+        Alert.alert('Error recording: ', e.message)
+      } finally {
+        setIsRecording(false)
+      }
+    } else {
+      Alert.alert('Camera reference is not set')
+    }
+  }
 
-  const stopRecording = () => null
+  const stopRecording = () => {
+    if (isRecording) {
+      console.log('Stop Recording called')
+      setIsRecording(false)
+      if (cameraRef.current) {
+        cameraRef.current.stopRecording()
+        console.log('Recording stopped')
+      } else {
+        console.log('Camera reference is not set')
+      }
+      console.log('Video after stopRecording:', video)
+    } else {
+      console.log('Not recording, cannot stop')
+    }
+  }
+
+  const shareVideo = () => {}
+  const saveVideo = () => {}
+  const deleteVideo = () => {
+    setVideo(undefined)
+  }
+
+  // Add a useEffect to log the video state whenever it changes
+  useEffect(() => {
+    console.log('Video state changed:', video)
+  }, [video])
 
   useEffect(() => {
     ;(async () => {
@@ -36,6 +80,17 @@ export default function App() {
       await requestMediaPermission()
     })()
   }, [])
+
+  if (video) {
+    return (
+      <VideoPlayer
+        video={video}
+        onShare={shareVideo}
+        onSave={saveVideo}
+        onDelete={deleteVideo}
+      />
+    )
+  }
 
   if (!permission?.granted || !status?.granted) {
     // Permissions are not granted yet.
