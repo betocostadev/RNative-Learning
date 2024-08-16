@@ -1,5 +1,5 @@
 export interface VideoPlayerProps {
-  video: any
+  video: { uri: string }
   onShare: () => void
   onSave: () => void
   onDelete: () => void

@@ -29,7 +29,6 @@ export default function App() {
   const recordVideo = async () => {
     const options: CameraRecordingOptions = { maxDuration: 3 }
     if (cameraRef.current) {
-      console.log('Recording started')
       setIsRecording(true)
       try {
         const recordedVideo = await cameraRef.current.recordAsync(options)
@@ -41,8 +40,6 @@ export default function App() {
       } finally {
         setIsRecording(false)
       }
-    } else {
-      Alert.alert('Camera reference is not set')
     }
   }
 
@@ -53,12 +50,8 @@ export default function App() {
       if (cameraRef.current) {
         cameraRef.current.stopRecording()
         console.log('Recording stopped')
-      } else {
-        console.log('Camera reference is not set')
       }
       console.log('Video after stopRecording:', video)
-    } else {
-      console.log('Not recording, cannot stop')
     }
   }
 

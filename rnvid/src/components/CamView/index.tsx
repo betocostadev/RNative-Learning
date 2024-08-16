@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { CameraMode, CameraType, CameraView } from 'expo-camera'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
@@ -23,7 +23,12 @@ export default function CamView({
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
+      <CameraView
+        style={styles.camera}
+        facing={facing}
+        mode={mode}
+        ref={cameraRef}
+      >
         <View style={styles.menuContainer}>
           <View style={styles.menuContainerRight}>
             <TouchableOpacity onPress={toggleCameraMode}>
