@@ -9,6 +9,7 @@ import {
 } from 'expo-camera'
 import * as MediaLibrary from 'expo-media-library'
 import { shareAsync } from 'expo-sharing'
+import { MAX_VIDEO_RECORD_DURATION } from '../../utils/constants'
 
 export const useVideoViewModel = () => {
   const [cameraPermission, requestCameraPermission] = useCameraPermissions()
@@ -18,8 +19,10 @@ export const useVideoViewModel = () => {
 
   const [albums, setAlbums] = useState<MediaLibrary.Album[]>([])
   const [isRecording, setIsRecording] = useState(false)
+  const [elapsedTime, setElapsedTime] = useState(0)
   const [video, setVideo] = useState<{ uri: string } | undefined>(undefined)
   const cameraRef = useRef<CameraView>(null)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     ;(async () => {
@@ -30,9 +33,15 @@ export const useVideoViewModel = () => {
   }, [])
 
   const recordVideo = async () => {
-    const options: CameraRecordingOptions = { maxDuration: 15 }
+    const options: CameraRecordingOptions = {
+      maxDuration: MAX_VIDEO_RECORD_DURATION,
+    }
     if (cameraRef.current) {
       setIsRecording(true)
+      setElapsedTime(0)
+      timerRef.current = setInterval(() => {
+        setElapsedTime((prevTime) => prevTime + 1)
+      }, 1000)
       try {
         const recordedVideo = await cameraRef.current.recordAsync(options)
         setVideo(recordedVideo)
@@ -41,6 +50,10 @@ export const useVideoViewModel = () => {
         Alert.alert('Error recording: ', e.message)
       } finally {
         setIsRecording(false)
+        if (timerRef.current) {
+          clearInterval(timerRef.current)
+          timerRef.current = null
+        }
       }
     }
   }
@@ -48,8 +61,13 @@ export const useVideoViewModel = () => {
   const stopRecording = () => {
     if (isRecording) {
       setIsRecording(false)
+      setElapsedTime(0)
       if (cameraRef.current) {
         cameraRef.current.stopRecording()
+      }
+      if (timerRef.current) {
+        clearInterval(timerRef.current)
+        timerRef.current = null
       }
     }
   }
@@ -114,6 +132,7 @@ export const useVideoViewModel = () => {
     mediaPermission,
     isRecording,
     video,
+    elapsedTime,
     cameraRef,
     discardVideo,
     recordVideo,

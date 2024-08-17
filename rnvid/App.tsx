@@ -15,6 +15,7 @@ export default function App() {
     isRecording,
     cameraRef,
     video,
+    elapsedTime,
     discardVideo,
     recordVideo,
     saveVideo,
@@ -69,6 +70,7 @@ export default function App() {
 
   return (
     <CamView
+      elapsedTime={elapsedTime}
       cameraRef={cameraRef}
       isRecording={isRecording}
       onRecording={recordVideo}

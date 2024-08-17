@@ -1,5 +1,5 @@
-import { Button, SafeAreaView, TouchableOpacity, View } from 'react-native'
-import { Audio, Video } from 'expo-av'
+import { SafeAreaView, TouchableOpacity, View } from 'react-native'
+import { Video } from 'expo-av'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
 import { VideoPlayerProps } from './props'

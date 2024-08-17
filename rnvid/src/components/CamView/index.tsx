@@ -1,27 +1,38 @@
-import { useState } from 'react'
-import { Linking, TouchableOpacity, View } from 'react-native'
-import { CameraMode, CameraType, CameraView } from 'expo-camera'
+import { useMemo } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
+import { CameraView } from 'expo-camera'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
 import { CamViewProps } from './props'
 import { styles } from './styles'
+import { useCamViewModel } from './CamViewModel'
+import { MAX_VIDEO_RECORD_DURATION } from '../../utils/constants'
 
 export default function CamView({
   cameraRef,
   isRecording,
   onRecording,
   onStopRecording,
+  elapsedTime,
 }: CamViewProps) {
-  const [facing, setFacing] = useState<CameraType>('back')
-  const [mode, setMode] = useState<CameraMode>('video')
+  const { facing, mode, toggleCameraFacing, toggleCameraMode, openGallery } =
+    useCamViewModel()
 
-  const toggleCameraMode = () =>
-    mode === 'picture' ? setMode('video') : setMode('picture')
+  const getCamModeIcon = useMemo(() => {
+    return mode === 'picture' ? 'videocam-outline' : 'camera-outline'
+  }, [mode])
 
-  const toggleCameraFacing = () =>
-    setFacing((current) => (current === 'back' ? 'front' : 'back'))
+  const getCamRecordingButtonStyle = useMemo(() => {
+    return isRecording
+      ? [styles.buttonRecord, styles.buttonRecordStop]
+      : styles.buttonRecord
+  }, [isRecording])
 
-  const openGallery = () => Linking.openURL('photos-redirect://')
+  const getTimeElapsedText = () => {
+    return `0:${
+      elapsedTime !== 0 && elapsedTime < 10 ? `0${elapsedTime}` : elapsedTime
+    }${elapsedTime === 0 ? '0' : ''} / 0:${MAX_VIDEO_RECORD_DURATION}`
+  }
 
   return (
     <View style={styles.container}>
@@ -34,13 +45,7 @@ export default function CamView({
         <View style={styles.menuContainer}>
           <View style={styles.menuContainerRight}>
             <TouchableOpacity onPress={toggleCameraMode}>
-              <Ionicons
-                name={
-                  mode === 'picture' ? 'videocam-outline' : 'camera-outline'
-                }
-                size={32}
-                color="white"
-              />
+              <Ionicons name={getCamModeIcon} size={32} color="white" />
             </TouchableOpacity>
             <TouchableOpacity onPress={toggleCameraFacing}>
               <Ionicons name="camera-reverse-outline" size={32} color="white" />
@@ -51,12 +56,11 @@ export default function CamView({
           </View>
         </View>
         <View style={styles.buttonContainer}>
+          {mode === 'video' ? (
+            <Text style={styles.elapsedTime}>{getTimeElapsedText()}</Text>
+          ) : null}
           <TouchableOpacity
-            style={
-              isRecording
-                ? [styles.buttonRecord, styles.buttonRecordStop]
-                : styles.buttonRecord
-            }
+            style={getCamRecordingButtonStyle}
             onPress={isRecording ? onStopRecording : onRecording}
           />
         </View>

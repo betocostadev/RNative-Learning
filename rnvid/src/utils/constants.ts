@@ -1,0 +1,1 @@
+export const MAX_VIDEO_RECORD_DURATION = 30
