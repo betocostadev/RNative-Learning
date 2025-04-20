@@ -1,9 +1,17 @@
 export const theme = {
-  colorCerulean: '#1a759f',
-  colorWhite: '#fff',
-  fontXS: 12,
-  fontSM: 14,
-  fontLG: 18,
-  fontXL: 22,
-  fontXXL: 26,
+  colors: {
+    cerulean: '#1a759f',
+    white: '#fff',
+    black: '#000',
+    red: '#f30a0a',
+    darkGrey: '#545353',
+    lightGrey: '#eaeaea',
+  },
+  fontSize: {
+    XS: 12,
+    SM: 14,
+    LG: 18,
+    XL: 22,
+    XXL: 26,
+  },
 }
