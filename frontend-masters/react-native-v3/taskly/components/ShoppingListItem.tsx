@@ -2,23 +2,28 @@ import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { theme } from '../theme/theme'
 import { Feather } from '@expo/vector-icons'
 
-type ShoppingLIProps = {
-  name: string
-  isCompleted?: boolean
+type ShoppingListProps = {
+  item: ShoppingListItemType
+  handleDelete: (id: string) => void
 }
 
-export function ShoppingListItem({
-  name,
-  isCompleted = false,
-}: ShoppingLIProps) {
-  const handleDelete = () => {
+type ShoppingListItemType = {
+  id: string
+  name: string
+  done: boolean
+}
+
+export function ShoppingListItem({ item, handleDelete }: ShoppingListProps) {
+  const { id, name, done } = item
+
+  const deleteItem = () => {
     Alert.alert(
       `Are you sure you want to delete ${name}?`,
       'There is no way to revert this.',
       [
         {
           text: 'Yes',
-          onPress: () => console.log('Yes pressed'),
+          onPress: () => handleDelete(id),
           style: 'destructive',
         },
         {
@@ -35,7 +40,7 @@ export function ShoppingListItem({
     <View
       style={[
         styles.itemContainer,
-        isCompleted ? styles.completedItemContainer : undefined,
+        done ? styles.completedItemContainer : undefined,
       ]}
     >
       <View
@@ -43,7 +48,7 @@ export function ShoppingListItem({
           flexDirection: 'row',
         }}
       >
-        {isCompleted ? (
+        {done ? (
           <Feather
             name="check-square"
             size={24}
@@ -59,21 +64,15 @@ export function ShoppingListItem({
           />
         )}
         <Text
-          style={[
-            styles.itemText,
-            isCompleted ? styles.completedItemText : undefined,
-          ]}
+          style={[styles.itemText, done ? styles.completedItemText : undefined]}
         >
           {name}
         </Text>
       </View>
       <TouchableOpacity
         activeOpacity={0.8}
-        style={[
-          styles.button,
-          isCompleted ? styles.completedItemButton : undefined,
-        ]}
-        onPress={handleDelete}
+        style={[styles.button, done ? styles.completedItemButton : undefined]}
+        onPress={deleteItem}
       >
         <Text style={styles.buttonText}>
           <Feather name="trash-2" size={24} color={theme.colors.white} />
