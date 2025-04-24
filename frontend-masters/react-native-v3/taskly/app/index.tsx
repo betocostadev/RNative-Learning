@@ -1,18 +1,16 @@
-import { StatusBar } from 'expo-status-bar'
-import { ScrollView, StyleSheet, TextInput } from 'react-native'
-import { ShoppingListItem } from '../components/ShoppingListItem'
+// import { StatusBar } from 'expo-status-bar'
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
+import {
+  ShoppingListItem,
+  ShoppingListItemType,
+} from '../components/ShoppingListItem'
 import { theme } from '../theme/theme'
 import { useState } from 'react'
 
-const initialList = [
-  { id: '18:05:15 GMT+0100', name: 'Coffee', done: false },
-  { id: '18:05:16 GMT+0100', name: 'Dark Chocolate', done: false },
-  { id: '18:05:17 GMT+0100', name: 'Tea', done: true },
-  { id: '18:05:17 GMT+0100', name: 'Olive Oil', done: true },
-]
-
 export default function App() {
-  const [shoppingListItems, setShoppingListItems] = useState(initialList)
+  const [shoppingListItems, setShoppingListItems] = useState<
+    ShoppingListItemType[]
+  >([])
   const [inputItemText, setInputItemText] = useState<string>('')
 
   const handleSubmit = () => {
@@ -34,29 +32,31 @@ export default function App() {
   }
 
   return (
-    <ScrollView
+    <FlatList
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       stickyHeaderIndices={[0]}
-    >
-      {/* <View style={[StyleSheet.absoluteFill, { backgroundColor: '#ffffff' }]} /> */}
-      <TextInput
-        style={styles.textInput}
-        placeholder="E.g. Pinga"
-        value={inputItemText}
-        onChangeText={setInputItemText}
-        returnKeyType="done"
-        onSubmitEditing={handleSubmit}
-      />
-      {shoppingListItems.map((item) => (
-        <ShoppingListItem
-          item={item}
-          key={item.id}
-          handleDelete={handleDelete}
+      data={shoppingListItems}
+      keyExtractor={(item) => item.id}
+      ListEmptyComponent={() => (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>Your shopping list is empty.</Text>
+        </View>
+      )}
+      ListHeaderComponent={
+        <TextInput
+          style={styles.textInput}
+          placeholder="E.g. Pinga"
+          value={inputItemText}
+          onChangeText={setInputItemText}
+          returnKeyType="done"
+          onSubmitEditing={handleSubmit}
         />
-      ))}
-      <StatusBar style="auto" />
-    </ScrollView>
+      }
+      renderItem={({ item }) => {
+        return <ShoppingListItem item={item} handleDelete={handleDelete} />
+      }}
+    />
   )
 }
 
@@ -78,5 +78,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderRadius: 20,
     backgroundColor: '#fffffff0',
+  },
+  emptyContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 18,
+  },
+  emptyText: {
+    fontSize: theme.fontSize.LG,
   },
 })

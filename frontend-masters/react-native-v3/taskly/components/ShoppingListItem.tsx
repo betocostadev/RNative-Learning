@@ -7,7 +7,7 @@ type ShoppingListProps = {
   handleDelete: (id: string) => void
 }
 
-type ShoppingListItemType = {
+export type ShoppingListItemType = {
   id: string
   name: string
   done: boolean
