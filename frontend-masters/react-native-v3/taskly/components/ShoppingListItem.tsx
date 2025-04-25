@@ -42,27 +42,15 @@ export function ShoppingListItem({
           completedAtTimestamp ? styles.completedItemContainer : undefined,
         ]}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-          }}
-        >
-          {completedAtTimestamp ? (
-            <Feather
-              name="check-square"
-              size={24}
-              color={theme.colors.black}
-              style={{ paddingRight: 10 }}
-            />
-          ) : (
-            <Feather
-              name="square"
-              size={24}
-              color={theme.colors.black}
-              style={{ paddingRight: 10 }}
-            />
-          )}
+        <View style={styles.itemRow}>
+          <Feather
+            name={completedAtTimestamp ? 'check-square' : 'square'}
+            size={24}
+            color={theme.colors.black}
+            style={{ paddingRight: 10 }}
+          />
           <Text
+            numberOfLines={2}
             style={[
               styles.itemText,
               completedAtTimestamp ? styles.completedItemText : undefined,
@@ -70,19 +58,19 @@ export function ShoppingListItem({
           >
             {name}
           </Text>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={[
+              styles.button,
+              completedAtTimestamp ? styles.completedItemButton : undefined,
+            ]}
+            onPress={deleteItem}
+          >
+            <Text style={styles.buttonText}>
+              <Feather name="trash-2" size={24} color={theme.colors.white} />
+            </Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={[
-            styles.button,
-            completedAtTimestamp ? styles.completedItemButton : undefined,
-          ]}
-          onPress={deleteItem}
-        >
-          <Text style={styles.buttonText}>
-            <Feather name="trash-2" size={24} color={theme.colors.white} />
-          </Text>
-        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   )
@@ -95,16 +83,23 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingHorizontal: 8,
     paddingVertical: 16,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
+  itemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    flex: 1,
+  },
   itemText: {
-    fontSize: theme.fontSize.XL,
+    fontSize: theme.fontSize.LG,
     fontWeight: '200',
+    flex: 1,
   },
   button: {
     backgroundColor: theme.colors.red,
-    padding: 8,
+    padding: 6,
     borderRadius: 6,
   },
   buttonText: {

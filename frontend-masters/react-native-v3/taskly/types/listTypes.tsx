@@ -8,4 +8,9 @@ export type TShoppingListItem = {
   id: string
   name: string
   completedAtTimestamp: number | undefined
+  lastUpdatedTimestamp: number
+}
+
+export enum EStorage {
+  shoppingListItems = 'shoppingListItems',
 }

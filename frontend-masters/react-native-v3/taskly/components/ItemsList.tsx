@@ -1,5 +1,4 @@
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
-
 import { TShoppingListItem, TShoppingListProps } from '../types/listTypes'
 import { ShoppingListItem } from './ShoppingListItem'
 import { theme } from '../theme/theme'

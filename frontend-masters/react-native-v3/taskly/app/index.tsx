@@ -1,9 +1,10 @@
 // import { StatusBar } from 'expo-status-bar'
-import { StyleSheet } from 'react-native'
-import { TShoppingListItem } from '../types/listTypes'
-import { theme } from '../theme/theme'
-import { useState } from 'react'
+import { EStorage, TShoppingListItem } from '../types/listTypes'
+import { useEffect, useState } from 'react'
 import { ItemsList } from '../components/ItemsList'
+import { orderShoppingList } from '../utils/functions'
+import { getFromStorage, setInStorage } from '../utils/storage'
+import { LayoutAnimation } from 'react-native'
 
 export default function App() {
   const [shoppingListItems, setShoppingListItems] = useState<
@@ -19,6 +20,7 @@ export default function App() {
           id: new Date().toTimeString(),
           name: inputItemText,
           completedAtTimestamp: undefined,
+          lastUpdatedTimestamp: Date.now(),
         },
       ])
       setInputItemText('')
@@ -34,19 +36,42 @@ export default function App() {
               completedAtTimestamp: item.completedAtTimestamp
                 ? undefined
                 : Date.now(),
+              lastUpdatedTimestamp: Date.now(),
             }
           : item
       )
     )
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   }
 
   const handleDelete = (id: string) => {
     setShoppingListItems(shoppingListItems.filter((item) => item.id !== id))
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   }
+
+  useEffect(() => {
+    const fetchSavedList = async () => {
+      const data = await getFromStorage(EStorage.shoppingListItems)
+      if (data) {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+        setShoppingListItems(data)
+      }
+    }
+
+    const saveList = async () => {
+      await setInStorage(EStorage.shoppingListItems, shoppingListItems)
+    }
+
+    if (shoppingListItems.length === 0) {
+      fetchSavedList()
+    } else {
+      saveList()
+    }
+  }, [shoppingListItems])
 
   return (
     <ItemsList
-      items={shoppingListItems}
+      items={orderShoppingList(shoppingListItems)}
       inputItemText={inputItemText}
       setInputItemText={setInputItemText}
       onDelete={handleDelete}
