@@ -1,20 +1,14 @@
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { theme } from '../theme/theme'
 import { Feather } from '@expo/vector-icons'
+import { TShoppingListProps } from '../types/listTypes'
 
-type ShoppingListProps = {
-  item: ShoppingListItemType
-  handleDelete: (id: string) => void
-}
-
-export type ShoppingListItemType = {
-  id: string
-  name: string
-  done: boolean
-}
-
-export function ShoppingListItem({ item, handleDelete }: ShoppingListProps) {
-  const { id, name, done } = item
+export function ShoppingListItem({
+  item,
+  onDelete,
+  onToggleTaskStatus,
+}: TShoppingListProps) {
+  const { id, name, completedAtTimestamp } = item
 
   const deleteItem = () => {
     Alert.alert(
@@ -23,7 +17,7 @@ export function ShoppingListItem({ item, handleDelete }: ShoppingListProps) {
       [
         {
           text: 'Yes',
-          onPress: () => handleDelete(id),
+          onPress: () => onDelete(id),
           style: 'destructive',
         },
         {
@@ -36,49 +30,61 @@ export function ShoppingListItem({ item, handleDelete }: ShoppingListProps) {
     )
   }
 
+  const toggleTaskComplete = () => {
+    onToggleTaskStatus(id)
+  }
+
   return (
-    <View
-      style={[
-        styles.itemContainer,
-        done ? styles.completedItemContainer : undefined,
-      ]}
-    >
+    <TouchableOpacity onPress={toggleTaskComplete}>
       <View
-        style={{
-          flexDirection: 'row',
-        }}
+        style={[
+          styles.itemContainer,
+          completedAtTimestamp ? styles.completedItemContainer : undefined,
+        ]}
       >
-        {done ? (
-          <Feather
-            name="check-square"
-            size={24}
-            color={theme.colors.black}
-            style={{ paddingRight: 10 }}
-          />
-        ) : (
-          <Feather
-            name="square"
-            size={24}
-            color={theme.colors.black}
-            style={{ paddingRight: 10 }}
-          />
-        )}
-        <Text
-          style={[styles.itemText, done ? styles.completedItemText : undefined]}
+        <View
+          style={{
+            flexDirection: 'row',
+          }}
         >
-          {name}
-        </Text>
+          {completedAtTimestamp ? (
+            <Feather
+              name="check-square"
+              size={24}
+              color={theme.colors.black}
+              style={{ paddingRight: 10 }}
+            />
+          ) : (
+            <Feather
+              name="square"
+              size={24}
+              color={theme.colors.black}
+              style={{ paddingRight: 10 }}
+            />
+          )}
+          <Text
+            style={[
+              styles.itemText,
+              completedAtTimestamp ? styles.completedItemText : undefined,
+            ]}
+          >
+            {name}
+          </Text>
+        </View>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={[
+            styles.button,
+            completedAtTimestamp ? styles.completedItemButton : undefined,
+          ]}
+          onPress={deleteItem}
+        >
+          <Text style={styles.buttonText}>
+            <Feather name="trash-2" size={24} color={theme.colors.white} />
+          </Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={[styles.button, done ? styles.completedItemButton : undefined]}
-        onPress={deleteItem}
-      >
-        <Text style={styles.buttonText}>
-          <Feather name="trash-2" size={24} color={theme.colors.white} />
-        </Text>
-      </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   )
 }
 

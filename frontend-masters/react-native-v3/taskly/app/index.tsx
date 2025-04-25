@@ -1,15 +1,13 @@
 // import { StatusBar } from 'expo-status-bar'
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
-import {
-  ShoppingListItem,
-  ShoppingListItemType,
-} from '../components/ShoppingListItem'
+import { StyleSheet } from 'react-native'
+import { TShoppingListItem } from '../types/listTypes'
 import { theme } from '../theme/theme'
 import { useState } from 'react'
+import { ItemsList } from '../components/ItemsList'
 
 export default function App() {
   const [shoppingListItems, setShoppingListItems] = useState<
-    ShoppingListItemType[]
+    TShoppingListItem[]
   >([])
   const [inputItemText, setInputItemText] = useState<string>('')
 
@@ -20,11 +18,26 @@ export default function App() {
         {
           id: new Date().toTimeString(),
           name: inputItemText,
-          done: false,
+          completedAtTimestamp: undefined,
         },
       ])
       setInputItemText('')
     }
+  }
+
+  const handleToggleTaskStatus = (id: string) => {
+    setShoppingListItems(
+      shoppingListItems.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              completedAtTimestamp: item.completedAtTimestamp
+                ? undefined
+                : Date.now(),
+            }
+          : item
+      )
+    )
   }
 
   const handleDelete = (id: string) => {
@@ -32,59 +45,13 @@ export default function App() {
   }
 
   return (
-    <FlatList
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      stickyHeaderIndices={[0]}
-      data={shoppingListItems}
-      keyExtractor={(item) => item.id}
-      ListEmptyComponent={() => (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>Your shopping list is empty.</Text>
-        </View>
-      )}
-      ListHeaderComponent={
-        <TextInput
-          style={styles.textInput}
-          placeholder="E.g. Pinga"
-          value={inputItemText}
-          onChangeText={setInputItemText}
-          returnKeyType="done"
-          onSubmitEditing={handleSubmit}
-        />
-      }
-      renderItem={({ item }) => {
-        return <ShoppingListItem item={item} handleDelete={handleDelete} />
-      }}
+    <ItemsList
+      items={shoppingListItems}
+      inputItemText={inputItemText}
+      setInputItemText={setInputItemText}
+      onDelete={handleDelete}
+      onSubmit={handleSubmit}
+      onToggleTaskStatus={handleToggleTaskStatus}
     />
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.white,
-    padding: 12,
-  },
-  contentContainer: {
-    paddingBottom: 24,
-  },
-  textInput: {
-    borderColor: theme.colors.lightGrey,
-    borderWidth: 2,
-    padding: 12,
-    marginHorizontal: 12,
-    marginVertical: 14,
-    fontSize: 18,
-    borderRadius: 20,
-    backgroundColor: '#fffffff0',
-  },
-  emptyContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 18,
-  },
-  emptyText: {
-    fontSize: theme.fontSize.LG,
-  },
-})
