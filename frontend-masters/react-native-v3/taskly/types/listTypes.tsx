@@ -10,7 +10,3 @@ export type TShoppingListItem = {
   completedAtTimestamp: number | undefined
   lastUpdatedTimestamp: number
 }
-
-export enum EStorage {
-  shoppingListItems = 'shoppingListItems',
-}

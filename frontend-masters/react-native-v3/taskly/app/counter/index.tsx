@@ -6,25 +6,46 @@ import { theme } from '../../theme/theme'
 import { useEffect, useState } from 'react'
 import { Duration, intervalToDuration, isBefore } from 'date-fns'
 import { TimeSegment } from '../../components/TimeSegment'
+import { ONE_SECOND_MS } from '../../utils/constants'
+import { getFromStorage, setInStorage } from '../../utils/storage'
+import { EStorageKeys } from '../../types/general'
+
+type PersistedCountdownState = {
+  currentNotificationId: string | undefined
+  completedAtTimestamps: number[]
+}
 
 type CountdownStatus = {
   isOverdue: boolean
   distance: Duration
 }
 
-// 10 seconds from now
-const timestamp = Date.now() + 10 * 1000
+const frequency = ONE_SECOND_MS * 30
 
 export default function CounterScreen() {
+  const [countdownState, setCountdownState] = useState<
+    PersistedCountdownState | undefined
+  >(undefined)
   const [status, setStatus] = useState<CountdownStatus>({
     isOverdue: false,
     distance: {},
   })
 
-  console.log(status)
+  const lastCompletedTimestamp = countdownState?.completedAtTimestamps[0]
+
+  useEffect(() => {
+    const init = async () => {
+      const value = await getFromStorage(EStorageKeys.countdown)
+      setCountdownState(value)
+    }
+    init()
+  }, [])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
+      const timestamp = lastCompletedTimestamp
+        ? lastCompletedTimestamp + frequency
+        : Date.now()
       const isOverdue = isBefore(timestamp, Date.now())
       const distance = intervalToDuration(
         isOverdue
@@ -37,20 +58,21 @@ export default function CounterScreen() {
     return () => {
       clearInterval(intervalId)
     }
-  }, [])
+  }, [lastCompletedTimestamp])
 
   const scheduleNotification = async () => {
+    let pushNotificationId
     const result = await registerForPushNotificationsAsync()
     if (result === 'granted') {
-      await Notifications.scheduleNotificationAsync({
+      pushNotificationId = await Notifications.scheduleNotificationAsync({
         content: {
           title: "You've got a new task! 📬",
-          body: 'Here is the notification body',
-          data: { data: 'goes here', test: { test1: 'more data' } },
+          body: 'Time to work on it',
+          data: { data: 'Any data?', test: { test1: 'test data' } },
         },
         trigger: {
           type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-          seconds: 5,
+          seconds: frequency / 1000,
         },
       })
     } else {
@@ -61,6 +83,23 @@ export default function CounterScreen() {
         )
       }
     }
+
+    if (countdownState?.currentNotificationId) {
+      await Notifications.cancelScheduledNotificationAsync(
+        countdownState.currentNotificationId
+      )
+    }
+
+    const newCountdownState: PersistedCountdownState = {
+      currentNotificationId: pushNotificationId,
+      completedAtTimestamps: countdownState
+        ? [Date.now(), ...countdownState.completedAtTimestamps]
+        : [Date.now()],
+    }
+
+    setCountdownState(newCountdownState)
+
+    await setInStorage(EStorageKeys.countdown, newCountdownState)
   }
 
   return (

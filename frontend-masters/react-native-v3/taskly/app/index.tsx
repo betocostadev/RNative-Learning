@@ -1,11 +1,12 @@
 // import { StatusBar } from 'expo-status-bar'
-import { EStorage, TShoppingListItem } from '../types/listTypes'
+import { TShoppingListItem } from '../types/listTypes'
 import { useEffect, useState } from 'react'
 import { ItemsList } from '../components/ItemsList'
 import { orderShoppingList } from '../utils/functions'
 import { getFromStorage, setInStorage } from '../utils/storage'
 import { LayoutAnimation } from 'react-native'
 import * as Haptics from 'expo-haptics'
+import { EStorageKeys } from '../types/general'
 
 export default function App() {
   const [shoppingListItems, setShoppingListItems] = useState<
@@ -60,7 +61,7 @@ export default function App() {
 
   useEffect(() => {
     const fetchSavedList = async () => {
-      const data = await getFromStorage(EStorage.shoppingListItems)
+      const data = await getFromStorage(EStorageKeys.shoppingListItems)
       if (data) {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
         setShoppingListItems(data)
@@ -68,7 +69,7 @@ export default function App() {
     }
 
     const saveList = async () => {
-      await setInStorage(EStorage.shoppingListItems, shoppingListItems)
+      await setInStorage(EStorageKeys.shoppingListItems, shoppingListItems)
     }
 
     if (shoppingListItems.length === 0) {
