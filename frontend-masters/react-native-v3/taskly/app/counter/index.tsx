@@ -1,28 +1,27 @@
 import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import { registerForPushNotificationsAsync } from '../../utils/registerForPushNotificationsAsync'
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { theme } from '../../theme/theme'
 import { useEffect, useState } from 'react'
-import { Duration, intervalToDuration, isBefore } from 'date-fns'
+import { intervalToDuration, isBefore } from 'date-fns'
 import { TimeSegment } from '../../components/TimeSegment'
 import { ONE_SECOND_MS } from '../../utils/constants'
 import { getFromStorage, setInStorage } from '../../utils/storage'
 import { EStorageKeys } from '../../types/general'
-
-type PersistedCountdownState = {
-  currentNotificationId: string | undefined
-  completedAtTimestamps: number[]
-}
-
-type CountdownStatus = {
-  isOverdue: boolean
-  distance: Duration
-}
+import { CountdownStatus, PersistedCountdownState } from '../../types/countdown'
 
 const frequency = ONE_SECOND_MS * 30
 
 export default function CounterScreen() {
+  const [initializing, setInitializing] = useState(true)
   const [countdownState, setCountdownState] = useState<
     PersistedCountdownState | undefined
   >(undefined)
@@ -46,6 +45,9 @@ export default function CounterScreen() {
       const timestamp = lastCompletedTimestamp
         ? lastCompletedTimestamp + frequency
         : Date.now()
+      if (initializing) {
+        setInitializing(false)
+      }
       const isOverdue = isBefore(timestamp, Date.now())
       const distance = intervalToDuration(
         isOverdue
@@ -100,6 +102,10 @@ export default function CounterScreen() {
     setCountdownState(newCountdownState)
 
     await setInStorage(EStorageKeys.countdown, newCountdownState)
+  }
+
+  if (initializing) {
+    return <ActivityIndicator style={styles.activityIndicatorContainer} />
   }
 
   return (
@@ -197,5 +203,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 12,
     paddingBottom: 10,
+  },
+  activityIndicatorContainer: {
+    backgroundColor: theme.colors.white,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
