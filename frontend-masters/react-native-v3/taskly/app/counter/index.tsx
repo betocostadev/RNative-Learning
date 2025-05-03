@@ -7,16 +7,20 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native'
 import { theme } from '../../theme/theme'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { intervalToDuration, isBefore } from 'date-fns'
 import { TimeSegment } from '../../components/TimeSegment'
 import { ONE_SECOND_MS } from '../../utils/constants'
 import { getFromStorage, setInStorage } from '../../utils/storage'
 import { EStorageKeys } from '../../types/general'
 import { CountdownStatus, PersistedCountdownState } from '../../types/countdown'
+import * as Haptics from 'expo-haptics'
+import ConfettiCannon from 'react-native-confetti-cannon'
+import Explosion from 'react-native-confetti-cannon'
 
 const frequency = ONE_SECOND_MS * 30
 
@@ -29,8 +33,9 @@ export default function CounterScreen() {
     isOverdue: false,
     distance: {},
   })
-
   const lastCompletedTimestamp = countdownState?.completedAtTimestamps[0]
+  const confettiRef = useRef<Explosion>(null)
+  const { width, height } = useWindowDimensions()
 
   useEffect(() => {
     const init = async () => {
@@ -63,6 +68,8 @@ export default function CounterScreen() {
   }, [lastCompletedTimestamp])
 
   const scheduleNotification = async () => {
+    confettiRef.current?.start()
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
     let pushNotificationId
     const result = await registerForPushNotificationsAsync()
     if (result === 'granted') {
@@ -164,6 +171,16 @@ export default function CounterScreen() {
         {/* <Text style={styles.buttonText}>Request Permission</Text> */}
         <Text style={styles.buttonText}>Complete task!</Text>
       </TouchableOpacity>
+      <ConfettiCannon
+        ref={confettiRef}
+        count={50}
+        origin={{
+          x: width / 2,
+          y: height - height - 20,
+        }}
+        fadeOut
+        autoStart={false}
+      />
     </View>
   )
 }
