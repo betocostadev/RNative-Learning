@@ -2,10 +2,10 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 import { theme } from '../theme'
 
-export default function App() {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text>Planty ?</Text>
+      <Text>Profile</Text>
       <StatusBar style="auto" />
     </View>
   )
