@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router'
 import { ButtonX } from '@/components/ButtonX'
 import { LinearGradient } from 'expo-linear-gradient'
 import { StatusBar } from 'expo-status-bar'
+import PlantlyImage from '@/components/PlantyImage'
 
 export default function OnboardingScreen() {
   const router = useRouter()
@@ -27,6 +28,13 @@ export default function OnboardingScreen() {
       style={styles.container}
     >
       <StatusBar style="light" />
+      <View>
+        <Text style={styles.heading}>Plantly</Text>
+        <Text style={styles.tagline}>
+          Keep your plants healthy and hydrated!
+        </Text>
+      </View>
+      <PlantlyImage />
       <ButtonX title="Let me in!" onPress={handlePress} />
     </LinearGradient>
   )
@@ -35,11 +43,21 @@ export default function OnboardingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: theme.colors.white,
   },
-  text: {
+  heading: {
+    fontSize: 42,
+    color: theme.colors.white,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  tagline: {
+    marginHorizontal: 4,
     fontSize: 24,
+    color: theme.colors.white,
+    textAlign: 'center',
   },
 })
