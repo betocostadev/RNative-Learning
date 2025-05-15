@@ -11,10 +11,14 @@ import PlantlyImage from '@/components/PlantyImage'
 import { ButtonX } from '@/components/ButtonX'
 import { theme } from '@/styles/theme'
 import { useState } from 'react'
+import { usePlantStore } from '@/store/plantsStore'
+import { useRouter } from 'expo-router'
 
 export default function NewScreen() {
   const [name, setName] = useState<string>()
   const [days, setDays] = useState<string>()
+  const addPlant = usePlantStore((state) => state.addPlant)
+  const router = useRouter()
 
   const handleSubmit = () => {
     if (!name) {
@@ -35,7 +39,8 @@ export default function NewScreen() {
       )
     }
 
-    console.log('Adding plant', name, days)
+    addPlant(name, Number(days))
+    router.navigate('/')
   }
 
   return (
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 2,
-    borderColor: theme.colors.colorLightGrey,
+    borderColor: theme.colors.lightGrey,
     padding: 12,
     borderRadius: 6,
     marginBottom: 24,

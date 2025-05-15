@@ -5,9 +5,9 @@ import image from '@/assets/plantly.png'
 const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj['
 
-export default function PlantlyImage() {
+export default function PlantlyImage({ size }: { size?: number }) {
   const { width } = useWindowDimensions()
-  const imageSize = Math.min(width / 1.5, 400)
+  const imageSize = size || Math.min(width / 1.5, 400)
   return (
     <Image
       style={[styles.image, { width: imageSize, height: imageSize }]}
