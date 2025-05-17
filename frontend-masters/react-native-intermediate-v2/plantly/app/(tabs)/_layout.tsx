@@ -1,8 +1,7 @@
-import { AntDesign, Entypo } from '@expo/vector-icons'
-import { Link, Redirect, Tabs } from 'expo-router'
+import { Entypo } from '@expo/vector-icons'
+import { Redirect, Tabs } from 'expo-router'
 import { theme } from '@/styles/theme'
 import { useUserStore } from '@/store/userStore'
-import { Pressable, StyleSheet } from 'react-native'
 
 export default function Layout() {
   const hasFinishedOnboarding = useUserStore(
@@ -16,23 +15,13 @@ export default function Layout() {
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: theme.colors.green }}>
       <Tabs.Screen
-        name="index"
+        name="(home)"
         options={{
+          headerShown: false,
           title: 'Home',
           tabBarShowLabel: false,
           tabBarIcon: ({ size, color }) => (
             <Entypo name="leaf" size={size} color={color} />
-          ),
-          headerRight: () => (
-            <Link href="/new" asChild>
-              <Pressable style={styles.addPressable} hitSlop={20}>
-                <AntDesign
-                  name="pluscircleo"
-                  size={24}
-                  color={theme.colors.green}
-                />
-              </Pressable>
-            </Link>
           ),
         }}
       />
@@ -49,10 +38,3 @@ export default function Layout() {
     </Tabs>
   )
 }
-
-const styles = StyleSheet.create({
-  addPressable: {
-    marginRight: 18,
-    marginBottom: 4,
-  },
-})

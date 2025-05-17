@@ -7,7 +7,7 @@ import {
   Platform,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import PlantlyImage from '@/components/PlantyImage'
+import PlantlyImage from '@/components/PlantlyImage'
 import { ButtonX } from '@/components/ButtonX'
 import { theme } from '@/styles/theme'
 import { useState } from 'react'

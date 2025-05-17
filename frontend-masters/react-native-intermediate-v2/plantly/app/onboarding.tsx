@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router'
 import { ButtonX } from '@/components/ButtonX'
 import { LinearGradient } from 'expo-linear-gradient'
 import { StatusBar } from 'expo-status-bar'
-import PlantlyImage from '@/components/PlantyImage'
+import PlantlyImage from '@/components/PlantlyImage'
 
 export default function OnboardingScreen() {
   const router = useRouter()
