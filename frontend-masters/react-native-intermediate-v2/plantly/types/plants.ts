@@ -3,12 +3,18 @@ export type PlantType = {
   name: string
   wateringFrequencyDays: number
   lastWateredAtTimestamp?: number
+  imageUri?: string
 }
+
+export type AddPlantArgs = Pick<
+  PlantType,
+  'name' | 'wateringFrequencyDays' | 'imageUri'
+>
 
 export type PlantsState = {
   nextId: number
   plants: PlantType[]
-  addPlant: (name: string, wateringFrequencyDays: number) => void
+  addPlant: (args: AddPlantArgs) => Promise<void>
   removePlant: (plantId: string) => void
   waterPlant: (plantId: string) => void
 }
