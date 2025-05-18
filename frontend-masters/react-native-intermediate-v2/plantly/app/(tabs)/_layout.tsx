@@ -1,9 +1,10 @@
 import { Entypo } from '@expo/vector-icons'
-import { Redirect, Tabs } from 'expo-router'
+import { Redirect, SplashScreen, Tabs } from 'expo-router'
 import { theme } from '@/styles/theme'
 import { useUserStore } from '@/store/userStore'
 
 export default function Layout() {
+  SplashScreen.hideAsync()
   const hasFinishedOnboarding = useUserStore(
     (state) => state.hasFinishedOnboarding
   )

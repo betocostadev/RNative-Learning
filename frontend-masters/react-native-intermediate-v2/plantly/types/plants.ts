@@ -6,10 +6,7 @@ export type PlantType = {
   imageUri?: string
 }
 
-export type AddPlantArgs = Pick<
-  PlantType,
-  'name' | 'wateringFrequencyDays' | 'imageUri'
->
+export type AddPlantArgs = Omit<PlantType, 'id' | 'lastWateredAtTimestamp'>
 
 export type PlantsState = {
   nextId: number
