@@ -18,3 +18,10 @@ export enum FlashModeTypes {
   on = 'on',
   off = 'off',
 }
+
+// Better to use as const
+// const FlashModeTypes = {
+//   auto: 'auto',
+//   on: 'on',
+//   off: 'off',
+// } as const

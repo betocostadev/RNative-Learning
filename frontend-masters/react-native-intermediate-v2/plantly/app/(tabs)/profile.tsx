@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import { theme } from '@/styles/theme'
 import { useUserStore } from '@/store/userStore'
 import { ButtonX } from '@/components/ButtonX'
+import { SCREEN_TITLES } from '@/utils/constants'
 
 export default function ProfileScreen() {
   const toggleHasOnboarded = useUserStore((state) => state.toggleHasOnboarded)
@@ -10,7 +11,7 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={{ marginBottom: 16 }}>Profile</Text>
+      <Text style={{ marginBottom: 16 }}>{SCREEN_TITLES.Profile}</Text>
       <ButtonX title="Redo onboard" onPress={handlePress} />
       <StatusBar style="auto" />
     </View>

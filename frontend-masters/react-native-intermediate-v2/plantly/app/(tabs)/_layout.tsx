@@ -2,6 +2,7 @@ import { Entypo } from '@expo/vector-icons'
 import { Redirect, SplashScreen, Tabs } from 'expo-router'
 import { theme } from '@/styles/theme'
 import { useUserStore } from '@/store/userStore'
+import { SCREEN_TITLES } from '@/utils/constants'
 
 export default function Layout() {
   SplashScreen.hideAsync()
@@ -19,7 +20,7 @@ export default function Layout() {
         name="(home)"
         options={{
           headerShown: false,
-          title: 'Home',
+          title: SCREEN_TITLES.Home,
           tabBarShowLabel: false,
           tabBarIcon: ({ size, color }) => (
             <Entypo name="leaf" size={size} color={color} />
@@ -29,7 +30,7 @@ export default function Layout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: SCREEN_TITLES.Profile,
           tabBarShowLabel: false,
           tabBarIcon: ({ size, color }) => (
             <Entypo name="user" size={size} color={color} />
