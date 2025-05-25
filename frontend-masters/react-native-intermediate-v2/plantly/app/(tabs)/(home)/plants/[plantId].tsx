@@ -22,6 +22,15 @@ export default function PlantScreen() {
   )
 
   useEffect(() => {
+    // For deep linking with an action only
+    // Access with plantly://plants/1\?action=water --ios
+    // npx uri-scheme open plantly://plants/1\?action=water --ios
+    if (params.action === 'water') {
+      handleWaterPlant()
+    }
+  }, [])
+
+  useEffect(() => {
     if (plant) {
       navigation.setOptions({ title: plant?.name })
     }

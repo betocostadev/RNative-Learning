@@ -1,7 +1,12 @@
 import { theme } from '@/styles/theme'
+import { SCREEN_TITLES } from '@/utils/constants'
 import { AntDesign } from '@expo/vector-icons'
 import { Link, Stack } from 'expo-router'
 import { Pressable, StyleSheet } from 'react-native'
+
+export const unstable_settings = {
+  initialRootName: 'index',
+}
 
 export default function Layout() {
   return (
@@ -9,7 +14,7 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: SCREEN_TITLES.Home,
           headerRight: () => (
             <Link href="/new" asChild>
               <Pressable style={styles.addPressable} hitSlop={20}>
